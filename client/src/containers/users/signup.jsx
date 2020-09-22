@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 //import Components
-import Button from '../../_tools/useButton';
-import Input from '../../_tools/useInput';
+import Button from '../../components/useButton';
+import Input from '../../components/useInput';
 
 export default class UserRegistrationForm extends Component {
   constructor(props) {
@@ -11,7 +11,9 @@ export default class UserRegistrationForm extends Component {
     this.state = {
         employeeId: '',
         email: '',
-        username: ''
+        username: '',
+        role: '',
+        acceptTerms: true,
     }
     
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,8 +33,7 @@ export default class UserRegistrationForm extends Component {
             'Content-Type': 'application/json'
         }
     })
-    .then(res => res.json().then(users => this.setState({users})
-    ));
+    .then(res => res.json().then(users => this.setState({users})))
   }
 
   handleClearForm = (e) => {
@@ -44,7 +45,7 @@ export default class UserRegistrationForm extends Component {
       password: '',
       confirmPassword: '',
       role: '',
-      acceptTerms: false
+      acceptTerms: 'true'
     })
   }
 
@@ -57,15 +58,15 @@ export default class UserRegistrationForm extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="jumbotron">
-          <form className="container-fluid" onSubmit = {this.handleSubmit}>
+          <h3>Sign Up Form</h3>
+          <form className="container-fluid mt-1" onSubmit = {this.handleSubmit}>
 
             <Input
             inputType = {'text'}
             title = {'Employee ID'}
             name = {'employeeId'}
             value = {this.state.employeeId}
-            placeholder = {'Enter your employee ID'}
+            placeholder = {'Employee ID'}
             handleChange = { this.handleInput }
             />
             
@@ -74,7 +75,7 @@ export default class UserRegistrationForm extends Component {
             title = {'Email'}
             name = {'email'}
             value = {this.state.email}
-            placeholder = {'Enter your email here'}
+            placeholder = {'Email'}
             handleChange = { this.handleInput }
             />
 
@@ -83,7 +84,7 @@ export default class UserRegistrationForm extends Component {
             title = {'Username'}
             name = {'username'}
             value = {this.state.username}
-            placeholder = {'Enter your username here'}
+            placeholder = {'Username'}
             handleChange = { this.handleInput }
             />
 
@@ -92,7 +93,7 @@ export default class UserRegistrationForm extends Component {
             title = {'Password'}
             name = {'password'}
             value = {this.state.password}
-            placeholder = {'Enter your password here'}
+            placeholder = {'Password'}
             handleChange = { this.handleInput }
             />
             
@@ -101,7 +102,16 @@ export default class UserRegistrationForm extends Component {
             title = {'Confirm Password'}
             name = {'confirmPassword'}
             value = {this.state.confirmPassword}
-            placeholder = {'Enter your password again'}
+            placeholder = {'Confirm Password'}
+            handleChange = { this.handleInput }
+            />
+
+            <Input
+            inputType = {'text'}
+            title = {'Role'}
+            name = {'role'}
+            value = {this.state.role}
+            placeholder = {'Role'}
             handleChange = { this.handleInput }
             />
 
@@ -117,7 +127,6 @@ export default class UserRegistrationForm extends Component {
             title = {'Reset'}
             />
           </form>
-        </div>
       </React.Fragment>
     )
   }

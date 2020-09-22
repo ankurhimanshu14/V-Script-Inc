@@ -4,8 +4,7 @@ const Button = (props) => {
 	console.log(props.style);
 	return (
 		<button
-				style = { props.style }
-				className = { props.type === 'primary' ? 'btn btn-primary' : 'btn btn-secondary' }
+				className = { props.type === 'primary' ? 'btn btn-primary btn-block' : 'btn btn-secondary btn-block' }
 				onClick = { props.action } >
 					{props.title }
 				</button>
