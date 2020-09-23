@@ -1,18 +1,17 @@
 const router = require('express').Router();
 
-const { registration: userRegistration } = require('../users');
+const auth = require('./auth');
+const { registration: userRegistration, authenticate: userAuth, logout: userLogout } = require('../admin');
+const { registration: steelRegistration, inventory: steelInventory, releaseToCutting: releaseSteel } = require('../rmStore');
+const releaseToCutting = require('../rmStore/releaseToCutting');
 
-router.get('/testApi', (req, res) => {
-    const customer = [
-        {id: 1, firstName: 'John', lastName: 'Doe'},
-        {id: 2, firstName: 'Ankur', lastName: 'Himanshu'},
-        {id: 3, firstName: 'Ankita', lastName: 'Prasad'},
-        {id: 4, firstName: 'Shriti', lastName: 'Prasad'}
-    ];
+//ADMIN
+router.post('/users/registration', auth, userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
+router.get('/users/login', userAuth.fetchLoginDetails, userAuth.searchInMongo, userAuth.verifyUser, userAuth.storeTokenInRedis, userAuth.addTokenToCookie);
+router.get('/users/logout', userLogout.deleteTokens);
 
-    res.json(customer);
-});
-
-router.post('/users/registration', userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
-
+//RM_STORE
+router.post('/steels/registration', steelRegistration.fetchNewSteelData, steelRegistration.saveSteelData, steelRegistration.response);
+router.get('/steels/inventory', auth, steelInventory.getDates, steelInventory.searchInMongo, steelInventory.response);
+router.get('/steels/releaseSteel', releaseSteel.getPartNo, releaseSteel.searchInMongo)
 module.exports = router;

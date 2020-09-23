@@ -59,7 +59,7 @@ export default class UserRegistrationForm extends Component {
     return (
       <React.Fragment>
           <h3>Sign Up Form</h3>
-          <form className="container-fluid mt-1" onSubmit = {this.handleSubmit}>
+          <form className="container-fluid mt-1" action = '/' onSubmit = {this.handleSubmit}>
 
             <Input
             inputType = {'text'}

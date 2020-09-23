@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Button = (props) => {
-	console.log(props.style);
 	return (
 		<button
 				className = { props.type === 'primary' ? 'btn btn-primary btn-block' : 'btn btn-secondary btn-block' }
