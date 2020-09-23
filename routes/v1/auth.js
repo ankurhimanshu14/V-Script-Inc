@@ -4,7 +4,7 @@ const redisClient = require('../../_helpers/redis');
 
 const jwtKey = process.env.JWT_SECRET_KEY;
 
-module.exports = async function auth(req, res, next) {
+module.exports = function auth(req, res, next) {
     req._token = req.cookies.refreshToken || '';
     if(!req._token) {
         return res.status(401).send({ error: 'You need to login'});

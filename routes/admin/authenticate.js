@@ -19,23 +19,23 @@ module.exports = {
         }
     },
     searchInMongo: async (req, res, next) => {
-        req._foundUser = await USER_MODEL.find({ 'username': req._loginDetails._username})
+        req._foundUser = await USER_MODEL.findOne({ 'username': req._loginDetails._username})
         .then(result => { return result; })
         .catch(err => {
             res.status(401).json({msg: 'Credentials does not match our records.'}).end();
         });
-        if(!req._foundUser[0]) {
+        if(!req._foundUser) {
             res.status(404).json({msg: 'Credentials are incorrect'}).end();
         } else {
             next();
         }
     },
     verifyUser: async (req, res, next) => {
-        const { password, ...otherDetails } = req._foundUser[0];
+        const { password, ...otherDetails } = req._foundUser;
         req._verifiedUser = await bcrypt.compare(req._loginDetails._clientPassword, password)
                                         .then(result => {
                                             if (result) {
-                                                return req._foundUser[0];
+                                                return req._foundUser;
                                             } else {
                                                 res.status(404).json({msg: 'Credentials are wrong'}).end();
                                             }
@@ -45,10 +45,11 @@ module.exports = {
     },
 
     createToken: (req, res, next) => {
+        console.log(req._verifiedUser)
         if(req._verifiedUser) {
-            const { _id, role, authority, username, ...other } = req._verifiedUser;
+            const { _id, username, ...other } = req._verifiedUser;
             const tokenPayload = { userId: _id, role: role, authority: authority, username: username };
-    
+            console.log(tokenPayload);
             req._newToken = jwt.sign(tokenPayload, secretKey, { algorithm: 'HS256'}, {expiresIn: 60*60*24*7 }, function(err, token) {
                 return token;
             })
