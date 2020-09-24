@@ -8,7 +8,8 @@ const FIELDS = {
     USERNAME: 'username',
     EMAIL: 'email',
     PASSWORD: 'password',
-    ACCEPT_TERMS: 'acceptTerms'
+    ACCEPT_TERMS: 'acceptTerms',
+    AUTHORITY: 'authority'
 };
 
 const SCHEMA = {
@@ -17,7 +18,8 @@ const SCHEMA = {
     [FIELDS.USERNAME]: { type: String, unique: true },
     [FIELDS.EMAIL]: { type: String },
     [FIELDS.PASSWORD]: { type: String },
-    [FIELDS.ACCEPT_TERMS]: { type: Boolean, default: false }
+    [FIELDS.ACCEPT_TERMS]: { type: Boolean, default: false },
+    [FIELDS.AUTHORITY]: { type: String }
 };
 
 const userSchema = Schema(SCHEMA);
