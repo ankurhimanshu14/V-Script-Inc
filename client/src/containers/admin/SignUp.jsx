@@ -1,91 +1,93 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
 
-export default function SignUp() {
-    const [ inputs, setInputs ] = useState({});
+import useSignUpForm from '../../customHooks/useSignUpForm';
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+const SignUp = () => {
 
+    const signup = () => {
+        
+        alert(`User Created!
+               Name: ${inputs.username}
+               Email: ${inputs.email}`);
     }
-
-    useEffect(() => {
-        fetch()
-    })
+    const { inputs, handleSubmit, handleInputChange } = useSignUpForm(signup);
 
     return (
         <React.Fragment>
-            <div className="jumbotron">
+            <div className="jumbotron mt-5">
                 <h3 className="text-center">Sign Up Here</h3>
-                <form className="form-group">
+                <form className="form-group" onSubmit={handleSubmit}>
                     <Input 
                     id = "employeeId"
                     name="employeeId"
                     type="text"
-                    value=""
-                    onChange=""
+                    onChange={handleInputChange}
                     placeholder="Employee ID"
+                    required
                     />
 
                     <Input 
                     id = "email"
                     name="email"
                     type="email"
-                    value=""
-                    onChange=""
+                    onChange={handleInputChange}
                     placeholder="Email"
+                    required
                     />
                     
                     <Input 
                     id = "username"
                     name="username"
                     type="text"
-                    value=""
-                    onChange=""
+                    onChange={handleInputChange}
                     placeholder="Username"
+                    required
                     />
                     
                     <Input 
                     id = "password"
                     name="password"
                     type="password"
-                    value=""
-                    onChange=""
+                    onChange={handleInputChange}
                     placeholder="Password"
+                    required
                     />
                     
                     <Input 
                     id = "role"
                     name="role"
-                    type="role"
-                    value=""
-                    onChange=""
+                    type="text"
+                    onChange={handleInputChange}
                     placeholder="Role"
+                    required
                     />
         
                     <Input 
                     id = "authority"
                     name="authority"
-                    type="authority"
-                    value=""
-                    onChange=""
+                    type="text"
+                    onChange={handleInputChange}
                     placeholder="Authority"
+                    required
                     />
 
                     <Button
-                    type="primary"
-                    onClick=""
+                    variant="primary"
+                    type="submit"
                     title="Submit"/>
 
                     <Button
-                    type="secondary"
-                    onClick=""
+                    variant="secondary"
+                    type="reset"
                     title="Reset"/>
                 </form>
+                <Link to="/sign-in"><p className="float-right">Already have an account?</p></Link>
             </div>
         </React.Fragment>
-
     )
 }
+
+export default SignUp;

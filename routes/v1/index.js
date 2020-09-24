@@ -6,7 +6,7 @@ const { registration: steelRegistration, inventory: steelInventory, releaseToCut
 const releaseToCutting = require('../rmStore/releaseToCutting');
 
 //ADMIN
-router.post('/users/registration', auth, userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
+router.post('/users/sign-up', userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
 router.get('/users/login', userAuth.fetchLoginDetails, userAuth.searchInMongo, userAuth.verifyUser, userAuth.storeTokenInRedis, userAuth.addTokenToCookie);
 router.get('/users/logout', userLogout.deleteTokens);
 
