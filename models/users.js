@@ -14,11 +14,11 @@ const FIELDS = {
 
 const SCHEMA = {
     [FIELDS.EMPLOYEE_ID]: { type: String },
-    [FIELDS.ROLE]: { Admin : { type: Boolean, default: false } },
+    [FIELDS.ROLE]: { type: String },
     [FIELDS.USERNAME]: { type: String, unique: true },
     [FIELDS.EMAIL]: { type: String },
     [FIELDS.PASSWORD]: { type: String },
-    [FIELDS.ACCEPT_TERMS]: { type: Boolean, default: false },
+    [FIELDS.ACCEPT_TERMS]: { type: Boolean },
     [FIELDS.AUTHORITY]: { type: String }
 };
 

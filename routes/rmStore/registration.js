@@ -31,7 +31,6 @@ module.exports = {
         // if(_decrypt) {
         //     req._newSteel.createdBy = _decrypt.userId;
         //     req._newSteel.modifiedBy = _decrypt.userId;
-        console.log(req._newSteel);
             next();
         // }
     },
