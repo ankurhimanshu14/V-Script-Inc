@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
+import Navbar from '../../components/useNavbar';
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -50,6 +51,8 @@ export default class SignUp extends Component {
     render() {
         return (
             <React.Fragment>
+                <Navbar
+                title="Registration" />
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Sign Up Here</h3>
                     <form className="form-group" method="POST" action="/api/v1/users/registration">
@@ -108,17 +111,19 @@ export default class SignUp extends Component {
                         />
     
                         <Button
+                        feature="block"
                         variant="primary"
                         type="submit"
                         onclick={this.handleSubmit}
                         title="Submit"/>
     
                         <Button
+                        feature="block"
                         variant="secondary"
                         type="reset"
                         title="Reset"/>
                     </form>
-                    <Link to="/sign-in"><p className="float-right">Already have an account?</p></Link>
+                    <Link to="/"><p className="float-right">Already have an account?</p></Link>
                 </div>
             </React.Fragment>
         )

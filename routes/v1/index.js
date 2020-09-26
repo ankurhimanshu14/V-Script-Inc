@@ -12,6 +12,6 @@ router.get('/users/logout', userLogout.deleteTokens);
 
 //RM_STORE
 router.post('/steels/registration', steelRegistration.fetchNewSteelData, steelRegistration.saveSteelData, steelRegistration.response);
-router.get('/steels/inventory', auth, steelInventory.getDates, steelInventory.searchInMongo, steelInventory.response);
+router.get('/steels/inventory', steelInventory.getDates, steelInventory.searchInMongo, steelInventory.response);
 router.get('/steels/releaseSteel', releaseSteel.getPartNo, releaseSteel.searchInMongo)
 module.exports = router;

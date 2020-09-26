@@ -4,7 +4,7 @@ import Input from '../../components/useInput';
 import Button from '../../components/useButton';
 import Navbar from '../../components/useNavbar';
 
-export default class SignIn extends Component {
+export default class ForgotPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -50,7 +50,7 @@ export default class SignIn extends Component {
                 <Navbar
                 title="Log In" />
                 <div className="jumbotron mt-5">
-                    <h3 className="text-center">Sign In Here</h3>
+                    <h3 className="text-center">Forgot Password?</h3>
                     <form className="form-group" method="POST" action="/api/v1/users/login">
                                              
                         <Input 
@@ -79,8 +79,7 @@ export default class SignIn extends Component {
                         title="Submit"/>
 
                     </form>
-                    <Link to="/users/registration"><p className="float-right">Doesn't have an account?</p></Link>
-                    <Link to="/users/forgotpassword"><p className="float-left">Forgot Password?</p></Link>
+                    <Link to="/"><p className="float-right">Do you want to log In?</p></Link>
                 </div>
             </React.Fragment>
         )
