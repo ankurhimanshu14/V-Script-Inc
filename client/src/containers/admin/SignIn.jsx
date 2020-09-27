@@ -4,56 +4,64 @@ import Input from '../../components/useInput';
 import Button from '../../components/useButton';
 
 export default class SignIn extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             'username': '',
-            'password': ''
+            'password': '',
+            'isAuthenticated': false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     };
 
-    handleSubmit(event) {
-        if (event) {
-            event.preventDefault();
-        }
-    }
-    
     handleInputChange(event) {
-        event.persist();
+        this.setState({
+            username: event.target.username,
+            password: event.target.password
+        })
     }
 
-    async componentDidMount(username, password) {
+    async handleSubmit(event) {
+        event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            Headers: {
-                'username': username,
-                'password': password
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer refreshToken',
             },
             body: JSON.stringify()
         };
-        const response = await fetch('http://localhost:5000/api/v1/users/login', requestOptions)
-        const data = response.json();
-        this.setState({
-            'username': data.username,
-            'password': data.password
+        
+        await fetch('http://localhost:5000/api/v1/users/login', requestOptions)
+        .then(res => {
+            if(!res.ok) {
+                throw new Error('Network response was not OK.');
+            } return res.blob();
         })
+        .then(myBlob => {
+            this.isAuthenticated = this.setState(true);
+            console.log(this);
+            this.setState();
+        })
+        .catch(err => {
+            console.log('There has been a problem with your fetch operation: ' + err);
+        });
     }
 
     render() {
         return (
             <React.Fragment>
                 <div className="jumbotron mt-5">
-                    <h3 className="text-center">Sign Up Here</h3>
-                    <form className="form-group" method="POST" action="/api/v1/users/login">
+                    <h3 className="text-center">Sign In Here</h3>
+                    <form className="form-group" method="POST" action="http://localhost:5000/api/v1/users/login">
                                              
                         <Input 
                         id = "username"
                         name="username"
                         type="text"
+                        value={this.state.username}
                         onChange={this.handleInputChange}
                         placeholder="Username"
                         required
@@ -63,6 +71,7 @@ export default class SignIn extends Component {
                         id = "password"
                         name="password"
                         type="password"
+                        value={this.state.password}
                         onChange={this.handleInputChange}
                         placeholder="Password"
                         required

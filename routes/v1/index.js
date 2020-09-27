@@ -7,7 +7,7 @@ const releaseToCutting = require('../rmStore/releaseToCutting');
 
 //ADMIN
 router.post('/users/registration', userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
-router.get('/users/login', userAuth.fetchLoginDetails, userAuth.searchInMongo, userAuth.verifyUser, userAuth.storeTokenInRedis, userAuth.addTokenToCookie);
+router.post('/users/login', userAuth.fetchLoginDetails, userAuth.searchInMongo, userAuth.verifyUser, userAuth.createToken, userAuth.storeTokenInRedis, userAuth.addTokenToCookie);
 router.get('/users/logout', userLogout.deleteTokens);
 
 //RM_STORE

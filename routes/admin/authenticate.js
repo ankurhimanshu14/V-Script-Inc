@@ -9,8 +9,8 @@ const secretKey = process.env.JWT_SECRET_KEY;
 module.exports = {
     fetchLoginDetails: (req, res, next) => {
         req._loginDetails = {
-            _username: req.headers.username,
-            _clientPassword: req.headers.password
+            _username: req.body.username,
+            _clientPassword: req.body.password
         };
         if(!req._loginDetails) {
             res.status(401).json({msg: 'Credentials not entered'}).end();
@@ -25,7 +25,7 @@ module.exports = {
             res.status(401).json({msg: 'Credentials does not match our records.'}).end();
         });
         if(!req._foundUser) {
-            res.status(404).json({msg: 'Credentials are incorrect'}).end();
+            res.status(404).json({msg: 'Authentication failed'}).end();
         } else {
             next();
         }
@@ -45,11 +45,9 @@ module.exports = {
     },
 
     createToken: (req, res, next) => {
-        console.log(req._verifiedUser)
         if(req._verifiedUser) {
-            const { _id, username, ...other } = req._verifiedUser;
+            const { _id, username, role, authority, ...other } = req._verifiedUser;
             const tokenPayload = { userId: _id, role: role, authority: authority, username: username };
-            console.log(tokenPayload);
             req._newToken = jwt.sign(tokenPayload, secretKey, { algorithm: 'HS256'}, {expiresIn: 60*60*24*7 }, function(err, token) {
                 return token;
             })
