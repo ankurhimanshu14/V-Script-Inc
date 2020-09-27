@@ -10,7 +10,7 @@ module.exports = function auth(req, res, next) {
         return res.status(401).send({ error: 'You need to login'});
     }
 
-    const decrypt = jwt.verify(req.cookies.refreshToken, jwtKey, function(error, result) {
+    const decrypt = jwt.verify(req._token, jwtKey, function(error, result) {
         if(result) {
             return result;
         } else {

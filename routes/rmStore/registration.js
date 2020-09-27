@@ -19,20 +19,20 @@ module.exports = {
             [STEEL_FIELDS.MODIFIED_ON]: Date.now()
         });
 
-        //fetch user data here from cookies
-        // const _decrypt = jwt.verify(req.cookies.refreshToken, jwtKey, function(error, result) {
-        //     if(result) {
-        //         return result;
-        //     } else {
-        //         console.log(error);
-        //     };
-        // });
-        // //post userIds with the documents created
-        // if(_decrypt) {
-        //     req._newSteel.createdBy = _decrypt.userId;
-        //     req._newSteel.modifiedBy = _decrypt.userId;
+        // fetch user data here from cookies
+        const _decrypt = jwt.verify(req.cookies.refreshToken, jwtKey, function(error, result) {
+            if(result) {
+                return result;
+            } else {
+                console.log(error);
+            };
+        });
+        //post userIds with the documents created
+        if(_decrypt) {
+            req._newSteel.createdBy = _decrypt.userId;
+            req._newSteel.modifiedBy = _decrypt.userId;
             next();
-        // }
+        }
     },
     saveSteelData: async (req, res, next) => {
         req._savedSteelData = await req._newSteel.save()

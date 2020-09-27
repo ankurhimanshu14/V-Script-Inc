@@ -9,7 +9,6 @@ export default class SignIn extends Component {
         this.state = {
             'username': '',
             'password': '',
-            'isAuthenticated': false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,14 +35,11 @@ export default class SignIn extends Component {
         
         await fetch('http://localhost:5000/api/v1/users/login', requestOptions)
         .then(res => {
-            if(!res.ok) {
-                throw new Error('Network response was not OK.');
-            } return res.blob();
+            this.setToken(res.token)
+            return Promise.resolve(res)
         })
-        .then(myBlob => {
-            this.isAuthenticated = this.setState(true);
-            console.log(this);
-            this.setState();
+        .then(data => {
+            console.log(data)
         })
         .catch(err => {
             console.log('There has been a problem with your fetch operation: ' + err);
@@ -85,6 +81,8 @@ export default class SignIn extends Component {
 
                     </form>
                     <Link to="/users/registration"><p className="float-right">Doesn't have an account?</p></Link>
+                    <Link to="/users/forgotpassword"><p className="float-left">Forgot Password?</p></Link>
+
                 </div>
             </React.Fragment>
         )

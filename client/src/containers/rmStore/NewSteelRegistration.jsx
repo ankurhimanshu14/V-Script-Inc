@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
 
+import fetchData from '../../_helpers/fetchData';
+
 export default class NewSteel extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             'challanNo': '',
             'challanDate': '',
@@ -20,36 +22,27 @@ export default class NewSteel extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     };
-
-    handleSubmit(event) {
-        if (event) {
-            event.preventDefault();
-        }
-    }
     
     handleInputChange(event) {
-        event.persist();
+        this.setState({
+            challanNo: event.target.challanNo,
+            challanDate: event.target.challanDate,
+            grade: event.target.grade,
+            section: event.target.section,
+            heatNo: event.target.heatNo,
+            heatCode: event.target.heatCode,
+            jominyValue: event.target.jominyValue,
+            approvals: event.target.approvals,
+            receivedQty: event.target.receivedQty,
+        });
     }
 
-    async componentDidMount() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify()
-        };
-        const response = await fetch('http://localhost:5000/api/v1/steels/registration', requestOptions)
-        const data = response.json();
-        this.setState({
-            'challanNo': data.challanNo,
-            'challanDate': data.challanDate,
-            'grade': data.grade,
-            'section': data.section,
-            'heatNo': data.heatNo,
-            'heatCode': data.heatCode,
-            'jominyValue': data.jominyValue,
-            'approvals': data.approvals,
-            'receivedQty': data.receivedQty
-        })
+    handleSubmit(event) {
+        event.preventDefault();
+        fetchData('http://localhost:5000/api/v1/steels/registration')
+        .then(res => res.json())
+        .then(data => console.log('New Steel Added: ' + data))
+        .catch(err => console.log('Error: ' + err))
     }
 
     render() {

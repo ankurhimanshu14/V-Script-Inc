@@ -14,9 +14,9 @@ const FIELDS = {
     RECEIVED_QTY: 'receivedQty',
     AVAILABLE_QTY: 'availableQty',
     HEAT_STATUS: 'heatStatus',
-    // CREATED_BY: 'createdBy',
+    CREATED_BY: 'createdBy',
     CREATED_ON: 'createdOn',
-    // MODIFIED_BY: 'modifiedBy',
+    MODIFIED_BY: 'modifiedBy',
     MODIFIED_ON: 'modifiedOn'
 };
 
@@ -29,15 +29,15 @@ const SCHEMA = {
     [FIELDS.HEAT_NO]: { type: [String] },
     [FIELDS.HEAT_CODE]: { type: String },
     [FIELDS.JOMINY_VALUE]: { type: String },
-    [FIELDS.APPROVALS]: { type: [Schema.Types.ObjectId], ref: 'Part' },
+    [FIELDS.APPROVALS]: {type: [String] },
     [FIELDS.RECEIVED_QTY]: { type: Number},
     [FIELDS.AVAILABLE_QTY]: { type: Number, default: function () {
         return this[FIELDS.RECEIVED_QTY];
     } },
     [FIELDS.HEAT_STATUS]: { type: Boolean, default: true },
-    // [FIELDS.CREATED_BY]: { type: Schema.Types.String, ref: 'User' },
+    [FIELDS.CREATED_BY]: { type: Schema.Types.String, ref: 'User' },
     [FIELDS.CREATED_ON]: { type: Date, default: Date.now },
-    // [FIELDS.MODIFIED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
+    [FIELDS.MODIFIED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
     [FIELDS.MODIFIED_ON]: { type: Date }
 };
 

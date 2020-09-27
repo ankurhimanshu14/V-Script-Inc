@@ -125,7 +125,7 @@ export default class SignUp extends Component {
                         type="reset"
                         title="Reset"/>
                     </form>
-                    <Link to="/users/login"><p className="float-right">Already have an account?</p></Link>
+                    <Link to="/"><p className="float-right">Already have an account?</p></Link>
                 </div>
             </React.Fragment>
         )
