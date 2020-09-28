@@ -16,23 +16,14 @@ export default class ForgotPassword extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     };
 
-    handleSubmit(event) {
-        if (event) {
-            event.preventDefault();
-        }
-    }
-    
-    handleInputChange(event) {
-        event.persist();
-    }
-
-    async componentDidMount(username, password) {
+    async handleSubmit(event) {
+        event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            Headers: {
-                'username': username,
-                'password': password
+            headers: {
+                'Content-Type': 'application/json',
+                'username': event.target.username,
+                'password': event.target.password
             },
             body: JSON.stringify()
         };
@@ -42,6 +33,23 @@ export default class ForgotPassword extends Component {
             'username': data.username,
             'password': data.password
         })
+    }   
+
+    handleInputChange(event) {
+        if(this.confirmPassword === this.password) {
+            this.setState({
+                username: event.target.username,
+                password: event.target.password
+            })
+        }
+    }
+
+    handleConfirmPassword(event) {
+
+    }
+
+    async componentDidMount(username, password) {
+        
     }
 
     render() {
@@ -70,6 +78,15 @@ export default class ForgotPassword extends Component {
                         placeholder="Password"
                         required
                         />
+
+                        <Input 
+                        id = "confirmPassword"
+                        name="confirmPassword"
+                        type="password"
+                        onChange={this.handleInputChange}
+                        placeholder="Confirm Password"
+                        required
+                        />
     
                         <Button
                         feature="block"
@@ -79,7 +96,7 @@ export default class ForgotPassword extends Component {
                         title="Submit"/>
 
                     </form>
-                    <Link to="/"><p className="float-right">Do you want to log In?</p></Link>
+                    <p className="float-right">Are you lost? Go back to <Link to="/">Log In</Link> page</p>
                 </div>
             </React.Fragment>
         )

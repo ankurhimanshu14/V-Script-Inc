@@ -9,8 +9,8 @@ const secretKey = process.env.JWT_SECRET_KEY;
 module.exports = {
     fetchLoginDetails: (req, res, next) => {
         req._loginDetails = {
-            _username: req.body.username,
-            _clientPassword: req.body.password
+            _username: req.headers.username,
+            _clientPassword: req.headers.password
         };
         if(!req._loginDetails) {
             res.status(401).json({msg: 'Credentials not entered'}).end();
@@ -25,7 +25,7 @@ module.exports = {
             res.status(401).json({msg: 'Credentials does not match our records.'}).end();
         });
         if(!req._foundUser) {
-            res.status(404).json({msg: 'Authentication failed'}).end();
+            res.status(404).json({msg: 'Authentication Failed'}).end();
         } else {
             next();
         }
@@ -74,7 +74,7 @@ module.exports = {
         };
         
         res.cookie('refreshToken', req._newToken, cookieOptions);
-        res.status(200).json({msg:'You are ready to read/ write our records.'}).end();
+        res.status(200).json({msg:'Authenticated'}).end();
         next();
     }
 }

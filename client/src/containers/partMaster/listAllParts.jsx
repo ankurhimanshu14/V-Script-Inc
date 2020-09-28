@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
 
-export default class NewSteel extends Component {
+export default class PartList extends Component {
     constructor() {
         super();
         this.state = {
