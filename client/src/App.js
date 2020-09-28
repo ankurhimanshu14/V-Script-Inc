@@ -11,9 +11,8 @@ const App = () => {
     return (
         <BrowserRouter>
         <Switch>
-            <Route path="/" component={SignIn} />
+            <Route exact path="/" component={SignIn} />
             <Route path="/users/registration" component={SignUp} />
-            <Route path="/users/forgotpassword" component={ForgotPassword} />
             <Route path="/steels/registration" component={NewSteelRegistration} />
             <Route path="/steels/inventory" component={SteelInventory} />
         </Switch>

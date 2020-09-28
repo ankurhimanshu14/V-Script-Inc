@@ -5,8 +5,8 @@ import Button from '../../components/useButton';
 import Navbar from '../../components/useNavbar';
 
 export default class SignUp extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             'employeeId': '',
             'email': '',
@@ -14,38 +14,39 @@ export default class SignUp extends Component {
             'password': '',
             'role': '',
             'authority': '',
-            'acceptTerms': 0
+            'acceptTerms': false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     };
 
-    handleSubmit(event) {
-        if (event) {
-            event.preventDefault();
-        }
+    async handleSubmit(event) {
+        event.preventDefault();
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer refreshToken',
+            },
+            body: JSON.stringify()
+        };
+        await fetch('http://localhost:5000/api/v1/users/registration', requestOptions)
+        .then(res => res.json())
+        .then(data => console.log('Data: '+ data))
+        .catch(err => console.log(err));
     }
     
     handleInputChange(event) {
-        event.persist();
-    }
-
-    async componentDidMount() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify()
-        };
-        const response = await fetch('http://localhost:5000/api/v1/users/registration', requestOptions)
-        const data = response.json();
         this.setState({
-            'employeeId': data.employeeId,
-            'email': data.email,
-            'username': data.username,
-            'password': data.password,
-            'role': data.role,
-            'acceptTerms': {[data.accepTerms]: 1}})
+            'employeeId': event.target.employeeId,
+            'email': event.target.email,
+            'username': event.target.username,
+            'password': event.target.password,
+            'role': event.target.role,
+            'authority': event.target.authority,
+            'acceptTerms': true
+        })
     }
 
     render() {
@@ -55,11 +56,12 @@ export default class SignUp extends Component {
                 title="Registration" />
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Sign Up Here</h3>
-                    <form className="form-group" method="POST" action="/api/v1/users/registration">
+                    <form className="form-group" method="POST">
                         <Input 
                         id = "employeeId"
                         name="employeeId"
                         type="text"
+                        value={this.state.employeeId}
                         onChange={this.handleInputChange}
                         placeholder="Employee ID"
                         required
@@ -69,6 +71,7 @@ export default class SignUp extends Component {
                         id = "email"
                         name="email"
                         type="email"
+                        value={this.state.email}
                         onChange={this.handleInputChange}
                         placeholder="Email"
                         required
@@ -78,6 +81,7 @@ export default class SignUp extends Component {
                         id = "username"
                         name="username"
                         type="text"
+                        value={this.state.username}
                         onChange={this.handleInputChange}
                         placeholder="Username"
                         required
@@ -87,6 +91,7 @@ export default class SignUp extends Component {
                         id = "password"
                         name="password"
                         type="password"
+                        value={this.state.password}
                         onChange={this.handleInputChange}
                         placeholder="Password"
                         required
@@ -96,6 +101,7 @@ export default class SignUp extends Component {
                         id = "role"
                         name="role"
                         type="text"
+                        value={this.state.role}
                         onChange={this.handleInputChange}
                         placeholder="Role"
                         required
@@ -105,6 +111,7 @@ export default class SignUp extends Component {
                         id = "authority"
                         name="authority"
                         type="text"
+                        value={this.state.authority}
                         onChange={this.handleInputChange}
                         placeholder="Authority"
                         required
