@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = require('../../_helpers/db');
+const Schema = require('../_helpers/db');
 
 FIELDS = {
     PO_NO: 'poNo',

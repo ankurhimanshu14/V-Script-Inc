@@ -1,8 +1,8 @@
-const { PART_MODEL } = require('../../models/parts');
+const { EMP_FIELDS, EMP_MODEL } = require('../../../models/employees/model');
 
 module.exports = {
     fetchFromMongo: async (req, res, next) => {
-        req._partDetails = await PART_MODEL.find()
+        req._employeeDetails = await EMP_MODEL.find()
                                                 .then(result => {
                                                     return { status: 200, error: null, data: result }
                                                 })
@@ -12,7 +12,7 @@ module.exports = {
         next();
     },
     response: (req, res, next) => {
-        const { status, error, data } = req._partDetails;
-        res.status(status).json(data).end();
+        const { status, error, data } = req._employeeDetails;
+        res.status(status).json({error: error, data: data }).end();
     }
 }

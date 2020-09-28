@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { PART_FIELDS, PART_MODEL } = require('../../../models/parts/model');
+const { PART_FIELDS, PART_MODEL } = require('../../models/parts');
 
 const jwtKey = process.env.JWT_SECRET_KEY;
 

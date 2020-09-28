@@ -9,8 +9,8 @@ const secretKey = process.env.JWT_SECRET_KEY;
 module.exports = {
     fetchLoginDetails: (req, res, next) => {
         req._loginDetails = {
-            _username: req.headers.username,
-            _clientPassword: req.headers.password
+            _username: req.body.username,
+            _clientPassword: req.body.password
         };
         if(!req._loginDetails) {
             res.status(401).json({msg: 'Credentials not entered'}).end();

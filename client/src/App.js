@@ -6,6 +6,7 @@ import SignIn from './containers/admin/SignIn';
 import ForgotPassword from './containers/admin/ForgotPassword';
 import NewSteelRegistration from './containers/rmStore/NewSteelRegistration';
 import SteelInventory from './containers/rmStore/SteelInventory';
+import PartList from './containers/partMaster/listAllParts';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
             <Route path="/users/forgotpassword" component={ForgotPassword} />
             <Route path="/steels/registration" component={NewSteelRegistration} />
             <Route path="/steels/inventory" component={SteelInventory} />
+            <Route path="/parts/partlist" component={PartList} />
         </Switch>
         </BrowserRouter>
     )
