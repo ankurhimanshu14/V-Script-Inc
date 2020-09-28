@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
-import Navbar from '../../components/useNavbar';
 
 export default class ForgotPassword extends Component {
     constructor(props) {
@@ -55,8 +54,6 @@ export default class ForgotPassword extends Component {
     render() {
         return (
             <React.Fragment>
-                <Navbar
-                title="Log In" />
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Forgot Password?</h3>
                     <form className="form-group" method="POST" action="/api/v1/users/login">

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
-import Navbar from '../../components/useNavbar';
 
 export default class SignIn extends Component {
     constructor() {
@@ -24,37 +23,30 @@ export default class SignIn extends Component {
     }
 
     async handleSubmit(event) {
-        event.preventDefault();
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer refreshToken',
-            },
-            body: JSON.stringify()
-        };
-        
-        await fetch('http://localhost:5000/api/v1/users/login', requestOptions)
-        .then(res => {
-            this.setToken(res.token)
-            return Promise.resolve(res)
-        })
-        .then(data => {
-            console.log(data)
-        })
-        .catch(err => {
-            console.log('There has been a problem with your fetch operation: ' + err);
-        });
+        if(event) {
+            event.preventDefault();
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer refreshToken',
+                },
+                body: JSON.stringify()
+            };
+            const response = await fetch('http://localhost:5000/api/v1/users/login', requestOptions)
+            console.log(response);
+            const data = await response.json();
+            console.log(data.msg);
+            console.log(this.state);
+        }
     }
 
     render() {
         return (
             <React.Fragment>
-                <Navbar
-                title="Log In" />
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Sign In Here</h3>
-                    <form className="form-group" method="POST" action="http://localhost:5000/api/v1/users/login">
+                    <form className="form-group" method='POST' onSubmit={this.handleSubmit}>
                                              
                         <Input 
                         id = "username"
@@ -80,7 +72,6 @@ export default class SignIn extends Component {
                         feature="block"
                         variant="primary"
                         type="submit"
-                        onclick={this.handleSubmit}
                         title="Submit"/>
 
                     </form>
