@@ -4,10 +4,10 @@ import './App.css';
 import SignUp from './containers/admin/SignUp';
 import SignIn from './containers/admin/SignIn';
 import ForgotPassword from './containers/admin/ForgotPassword';
-import NewSteel from './containers/rmStore/NewSteelRegistration';
+// import NewSteel from './containers/rmStore/NewSteelRegistration';
 import SteelInventory from './containers/rmStore/SteelInventory';
 import PartList from './containers/partMaster/ListAllParts';
-import NewPart from './containers/partMaster/NewPartRegistration';
+// import NewPart from './containers/partMaster/NewPartRegistration';
 
 export default class App extends Component{
     render() {
@@ -17,7 +17,7 @@ export default class App extends Component{
                 <Route exact path="/" component={SignIn} />
                     <Route path="/users/registration" component={SignUp} />
                     <Route path="/users/forgotpassword" component={ForgotPassword} />
-                    <Route path="/steels/registration" component={NewSteelRegistration} />
+                    {/* <Route path="/steels/registration" component={NewSteelRegistration} /> */}
                     <Route path="/steels/inventory" component={SteelInventory} />
                     <Route path="/parts/partlist" component={PartList} />
             </Switch>

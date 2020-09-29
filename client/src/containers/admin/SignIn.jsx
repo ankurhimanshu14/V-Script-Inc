@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
-import Button from '../../components/useButton';
 
 export default class SignIn extends Component {
     constructor() {
@@ -53,7 +52,7 @@ export default class SignIn extends Component {
             <React.Fragment>
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Sign In Here</h3>
-                    <form className="form-group" onSubmit={this.handleSubmit}>
+                    <form className="form-group">
                                              
                         <Input 
                         id = "username"
@@ -75,11 +74,15 @@ export default class SignIn extends Component {
                         required
                         />
     
-                        <Button
+                        <Input
+                        id="submit-btn"
+                        name="submit"
                         feature="block"
                         variant="primary"
-                        type="submit"
-                        title="Submit"/>
+                        value="Submit"
+                        type="button"
+                        onClick={this.handleSubmit}
+                        />
 
                     </form>
                     <Link to="/users/registration"><p className="float-right">Doesn't have an account?</p></Link>
