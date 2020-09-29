@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 import Button from '../../components/useButton';
-import Navbar from '../../components/useNavbar';
 
 export default class SignUp extends Component {
     constructor() {
@@ -52,8 +51,6 @@ export default class SignUp extends Component {
     render() {
         return (
             <React.Fragment>
-                <Navbar
-                title="Registration" />
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Sign Up Here</h3>
                     <form className="form-group" method="POST">

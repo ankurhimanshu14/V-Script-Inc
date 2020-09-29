@@ -18,7 +18,7 @@ module.exports = function auth(req, res, next) {
         };
     });
 
-    let args = [`${decrypt.username}-token`, 0, Date.now()];
+    let args = [`${decrypt.username}: TOKEN`, 0, Date.now()];
 
     redisClient.zrangebyscore(args, function(error, listOfTokens) {
         if(!listOfTokens.includes(req.cookies.refreshToken)) {

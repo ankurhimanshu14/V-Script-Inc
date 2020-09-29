@@ -5,12 +5,23 @@ export default class PartList extends Component {
     constructor(props) {
         super(props);
         this.state = "";
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     };
 
-    async componentDidMount() {
-        const res = await fetch('http://localhost:5000/api/v1/parts/partList')
-        const parts = await res.json()
-        this.setState(parts)
+    async handleSubmit(event) {
+        event.preventDefault();
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer refreshToken'
+            }
+        };
+        
+        const response = await fetch('http://localhost:5000/api/v1/parts/partList', requestOptions)
+        const data = await response.json();
+        console.log(data)
     }
 
     render() {
@@ -18,7 +29,7 @@ export default class PartList extends Component {
             <React.Fragment>
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Part List</h3>
-                    <form className="form-group" method="GET" action="http://localhost:5000/api/v1/parts/partList">
+                    <form className="form-group" onSubmit={this.handleSubmit}>
                         <Button
                         variant="primary"
                         type="submit"

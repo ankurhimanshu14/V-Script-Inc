@@ -20,7 +20,7 @@ const Navbar = (props) => {
                 <form className="form-inline my-2 my-lg-0" method="GET">
                     <Input
                     type="text"
-                    placeHolder="Search" />
+                    placeholder="Search" />
                     <Button
                     feature="sm"
                     variant="secondary"
