@@ -16,11 +16,11 @@ module.exports = {
             };
         });
 
-        let args = [`${decrypt.username}: TOKEN`, 0, Date.now()];
+        let args = [`TOKEN: ${decrypt.username}`, 0, Date.now()];
 
         redisClient.zrangebyscore(args, function(error, listOfTokens) {
             if(listOfTokens.includes(req.cookies.refreshToken)) {
-                redisClient.zrem(`${decrypt.username}: TOKEN`, req.cookies.refreshToken, function(error, result) {
+                redisClient.zrem(`TOKEN: ${decrypt.username}`, req.cookies.refreshToken, function(error, result) {
                     if(result) {
                         res.clearCookie('refreshToken');
                         res.status(200).json({error: null, data:'You are logged out'}).end();
@@ -29,7 +29,7 @@ module.exports = {
                     }
                 })
             } else {
-                console.log(`Error in listing the tokens from ${decrypt.username}: TOKEN`);
+                console.log(`Error in listing the tokens from TOKEN: ${decrypt.username}`);
             }
         })
     }

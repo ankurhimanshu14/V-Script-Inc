@@ -7,7 +7,7 @@ const { registration: partRegistration, listAll: partList } = require('../partMa
 const releaseToCutting = require('../rmStore/releaseToCutting');
 
 //ADMIN
-router.post('/users/registration', userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
+router.post('/users/registration', auth, userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
 router.post('/users/login', userAuth.fetchLoginDetails, userAuth.searchInMongo, userAuth.verifyUser, userAuth.createToken, userAuth.storeTokenInRedis, userAuth.addTokenToCookie);
 router.get('/users/logout', userLogout.deleteTokens);
 
@@ -18,6 +18,6 @@ router.get('/steels/releaseSteel', auth, releaseSteel.getPartNo, releaseSteel.se
 
 //PART_MASTER
 router.post('/parts/registration', auth, partRegistration.fetchNewPartData, partRegistration.savePartData, partRegistration.response);
-router.get('/parts/partList', partList.fetchFromMongo, partList.response)
+router.get('/parts/partList', auth, partList.fetchFromMongo, partList.response)
 
 module.exports = router;

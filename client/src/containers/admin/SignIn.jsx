@@ -8,6 +8,7 @@ export default class NewSteelRegistration extends Component {
         this.state = {
             'username': '',
             'password': '',
+            'status': false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,27 +25,29 @@ export default class NewSteelRegistration extends Component {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer refreshToken'
+                'Authorization': 'Bearer refreshToken',
             },
             withCredentials: true,
             body: JSON.stringify({
                 username: this.state.username,
-                password: this.state.password
+                password: this.state.password,
             })
         };
         
         fetch('http://localhost:5000/api/v1/users/login', requestOptions)
         .then(res => res.json())
         .then(data => {
-            alert(data.msg)
-            if(data.token) {
+            this.setState({status: !this.state.status});
+            if(data.msg === "Authenticated" && data.token && this.state.status) {
+                alert(data.msg)
                 document.cookie = `accessToken=${data.token}`;
             }
+
         })
         .catch(err => {
             alert('There has been a problem with your fetch operation: ' + err);
         });
-        this.setState();
+        console.log(this.state)
     }
 
     render() {

@@ -24,10 +24,12 @@ export default class PartList extends Component {
         const response = await fetch('http://localhost:5000/api/v1/parts/partList', requestOptions)
         const data = await response.json();
         this.setState({parts: data});
+        console.log(this.state)
     }
 
     render() {
         const parts = Object.values(this.state.parts);
+        console.log(parts)
         return (
             <React.Fragment>
                 <div className="jumbotron mt-5">
@@ -42,6 +44,7 @@ export default class PartList extends Component {
                         />
                 </div>
                 <table id="parts" className="table table-hover">
+                    <thead>
                         <tr className="table-primary">
                             <th scope="col">Item Code</th>
                             <th scope="col">Part Name</th>
@@ -49,22 +52,21 @@ export default class PartList extends Component {
                             <th scope="col">Customer Name</th>
                             <th scope="col">Cut Weight (KGS)</th>
                             <th scope="col">Standard Weight (KGS)</th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        {parts.map(part => (
+                            <tr key={part.itemCode}>
+                                <td>{part.itemCode}</td>
+                                <td>{part.partName}</td>
+                                <td>{part.rawMaterial}</td>
+                                <td>{part.customerName}</td>
+                                <td>{part.cutWeight}</td>
+                                <td>{part.stdWeight}</td>
                             </tr>
-                            <tr>
-                                <tbody>
-                                    {parts.map(part => (
-                                        <tr key={part.itemCode}>
-                                            <td>{part.itemCode}</td>
-                                            <td>{part.partName}</td>
-                                            <td>{part.rawMaterial}</td>
-                                            <td>{part.customerName}</td>
-                                            <td>{part.cutWeight}</td>
-                                            <td>{part.stdWeight}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </tr>
-                    </table>
+                        ))}
+                    </tbody>
+                </table>
             </React.Fragment>
         )
     }
