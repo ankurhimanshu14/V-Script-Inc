@@ -24,12 +24,10 @@ export default class PartList extends Component {
         const response = await fetch('http://localhost:5000/api/v1/parts/partList', requestOptions)
         const data = await response.json();
         this.setState({parts: data});
-        console.log(this.state)
     }
 
     render() {
         const parts = Object.values(this.state.parts);
-        console.log(parts)
         return (
             <React.Fragment>
                 <div className="jumbotron mt-5">

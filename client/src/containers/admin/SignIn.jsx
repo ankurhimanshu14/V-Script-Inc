@@ -7,8 +7,7 @@ export default class NewSteelRegistration extends Component {
         super();
         this.state = {
             'username': '',
-            'password': '',
-            'status': false
+            'password': ''
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,10 +36,9 @@ export default class NewSteelRegistration extends Component {
         fetch('http://localhost:5000/api/v1/users/login', requestOptions)
         .then(res => res.json())
         .then(data => {
-            this.setState({status: !this.state.status});
-            if(data.msg === "Authenticated" && data.token && this.state.status) {
+            if(data.msg === "Authenticated" && data.token) {
                 alert(data.msg)
-                document.cookie = `accessToken=${data.token}`;
+                document.cookie = `refreshToken=${data.token}`;
             }
 
         })

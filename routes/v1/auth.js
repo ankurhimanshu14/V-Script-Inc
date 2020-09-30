@@ -5,12 +5,13 @@ const redisClient = require('../../_helpers/redis');
 const jwtKey = process.env.JWT_SECRET_KEY;
 
 module.exports = function auth(req, res, next) {
-    req._token = req.cookies.refreshToken || '';
-    if(!req._token) {
-        return res.status(401).send({ error: 'You need to login'});
+    const _token = req.cookies.refreshToken;
+    console.log(_token)
+    if(!_token) {
+        return res.status(401).send({ error: 'Hey! You need to login'});
     }
 
-    const decrypt = jwt.verify(req._token, jwtKey, function(error, result) {
+    const decrypt = jwt.verify(_token, jwtKey, function(error, result) {
         if(result) {
             return result;
         } else {
@@ -21,7 +22,7 @@ module.exports = function auth(req, res, next) {
     let args = [`TOKEN: ${decrypt.username}`, 0, Date.now()];
 
     redisClient.zrangebyscore(args, function(error, listOfTokens) {
-        if(!listOfTokens.includes(req.cookies.refreshToken)) {
+        if(!listOfTokens.includes(_token)) {
             console.log('Token expired');
             res.clearCookie('refreshToken');
             res.status(404).end();
