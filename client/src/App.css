@@ -3,25 +3,31 @@
 .jumbotron {
   width: 20%;
   margin: auto;
+  display: block;
 }
 
 .form-control {
-  max-height: 2rem;
+  max-height: 2.5rem;
 }
 
 .table {
   float: center;
+  text-align: center;
 }
 
 #submit-btn {
   background-color: #167bff;
   color: white;
-  font-weight: bolder;
   font-family: 'Raleway', sans-serif;
-  height: 60px;
   letter-spacing: 0.1rem;
 }
 
 p {
   font-size: small;
+  letter-spacing: 1px;
+  color: grey;
+}
+
+.card {
+  margin: 30px;
 }

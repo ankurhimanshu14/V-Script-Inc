@@ -26,7 +26,7 @@ module.exports = {
                 }
             ]
 
-        }, 'grade section heatNo heatCode availableQty heatStatus').sort({ challanDate: 'asc'})
+        }).sort({ challanDate: 'asc'})
         .then(result => {
             return result;
         })

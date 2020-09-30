@@ -22,122 +22,164 @@ export default class NewSteel extends Component {
     };
     
     handleInputChange(event) {
-        this.setState({
-            challanNo: event.target.challanNo,
-            challanDate: event.target.challanDate,
-            grade: event.target.grade,
-            section: event.target.section,
-            heatNo: event.target.heatNo,
-            heatCode: event.target.heatCode,
-            jominyValue: event.target.jominyValue,
-            approvals: event.target.approvals,
-            receivedQty: event.target.receivedQty,
-        });
+        this.setState({[event.target.name]: event.target.value})
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://localhost:5000/api/v1/steels/registration')
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer refreshToken'
+            },
+            withCredentials: true
+        };
+                
+        fetch('http://localhost:5000/api/v1/steels/registration', requestOptions)
         .then(res => res.json())
-        .then(data => console.log('New Steel Added: ' + data))
-        .catch(err => console.log('Error: ' + err))
+        .then(data => {
+            alert(('New Steel Added: ' + data))
+        })
+        .catch(err => {
+            alert('There has been a problem with your fetch operation: ' + err);
+        });
+        this.setState();
     }
 
     render() {
         return (
             <React.Fragment>
-                <div className="jumbotron mt-5">
+                <div className="card m-5">
                     <h3 className="text-center">Steel Register</h3>
-                    <form className="form-group" method="POST" action="/api/v1/steels/registration">
-                        <Input 
-                        id = "challanNo"
-                        name="challanNo"
-                        type="number"
-                        onChange={this.handleInputChange}
-                        placeholder="Challan No"
-                        required
-                        />
-    
-                        <Input 
-                        id = "challanDate"
-                        name="challanDate"
-                        type="Date"
-                        onChange={this.handleInputChange}
-                        placeholder="Challan Date"
-                        required
-                        />
-                        
-                        <Input 
-                        id = "grade"
-                        name="grade"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        placeholder="Material Grade"
-                        required
-                        />
-                        
-                        <Input 
-                        id = "section"
-                        name="section"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        placeholder="Section"
-                        required
-                        />
-                        
-                        <Input 
-                        id = "heatNo"
-                        name="heatNo"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        placeholder="Heat No"
-                        required
-                        />
-
-                        <Input 
-                        id = "heatCode"
-                        name="heatCode"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        placeholder="Heat Code"
-                        />
-            
-                        <Input 
-                        id = "jominyValue"
-                        name="jominyValue"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        placeholder="Jominy Value"
-                        />
-
-                        <Input 
-                        id = "approvals"
-                        name="approvals"
-                        type="text"
-                        onChange={this.handleInputChange}
-                        placeholder="Approved Components"
-                        required
-                        />
-
-                        <Input 
-                        id = "receivedQty"
-                        name="receivedQty"
-                        type="number"
-                        onChange={this.handleInputChange}
-                        placeholder="Received Quantity"
-                        required
-                        />
-    
-                        <Button
-                        variant="primary"
-                        type="submit"
-                        onclick={this.handleSubmit}
-                        title="Submit"/>
-    
-                        <Button
-                        variant="secondary"
-                        type="reset"
-                        title="Reset"/>
+                    <form className="form-group">
+                    <table id="steels" className="table table-hover">
+                    <thead>
+                    <tr className="table m-2">
+                        <th scope="col">Challan No</th>
+                        <th scope="col">Challan Date</th>
+                        <th scope="col">Material Grade</th>
+                        <th scope="col">Section</th>
+                        <th scope="col">Heat No.</th>
+                        <th scope="col">Heat Code</th>
+                        <th scope="col">Jominy Value</th>
+                        <th scope="col">Approved Components</th>
+                        <th scope="col">Received Quantity(KGS)</th>
+                        <th scope="col">Submit</th>
+                        <th scope="col">Reset</th>
+                    </tr>
+                    </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <Input 
+                                    id = "challanNo"
+                                    name="challanNo"
+                                    type="number"
+                                    value={this.state.challanNo}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "challanDate"
+                                    name="challanDate"
+                                    type="Date"
+                                    value={this.state.challanDate}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "grade"
+                                    name="grade"
+                                    type="text"
+                                    value={this.state.grade}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "section"
+                                    name="section"
+                                    type="text"
+                                    value={this.state.section}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "heatNo"
+                                    name="heatNo"
+                                    type="text"
+                                    value={this.state.heatNo}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "heatCode"
+                                    name="heatCode"
+                                    type="text"
+                                    value={this.state.heatCode}
+                                    onChange={this.handleInputChange}
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "jominyValue"
+                                    name="jominyValue"
+                                    type="text"
+                                    value={this.state.jominyValue}
+                                    onChange={this.handleInputChange}
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "approvals"
+                                    name="approvals"
+                                    type="text"
+                                    value={this.state.approvals}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input 
+                                    id = "receivedQty"
+                                    name="receivedQty"
+                                    type="number"
+                                    value={this.state.receivedQty}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    />
+                                </td>
+                                <td>
+                                    <Input
+                                    id="submit-btn"
+                                    name="submit"
+                                    feature="block"
+                                    variant="primary"
+                                    value="Submit"
+                                    type="button"
+                                    onClick={this.handleSubmit}
+                                    />
+                                </td>
+                                <td>
+                                    <Button
+                                    variant="secondary"
+                                    type="reset"
+                                    title="Reset"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     </form>
                 </div>
             </React.Fragment>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 
-export default class SignIn extends Component {
+export default class NewSteelRegistration extends Component {
     constructor() {
         super();
         this.state = {

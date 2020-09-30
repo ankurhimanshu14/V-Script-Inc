@@ -1,7 +1,6 @@
 import React , { Component } from 'react';
-
+import Moment from 'moment';
 import Input from '../../components/useInput';
-import Button from '../../components/useButton';
 
 export default class SteelInventory extends Component {
     constructor(props){
@@ -16,96 +15,87 @@ export default class SteelInventory extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     };
 
-    handleSubmit(event) {
-        if (event) {
-            event.preventDefault();
-        }
-    }
-    
-    handleInputChange(event) {
-        event.persist();
-    }
-
-    async componentDidMount() {
+    async handleSubmit(event) {
+        event.preventDefault();
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer refreshToken'
+            },
             body: JSON.stringify()
         };
         const response = await fetch('http://localhost:5000/api/v1/steels/inventory', requestOptions)
         const data = await response.json();
-        this.setState({data});
+        console.log(data);
+        this.setState({steels: data});
+    }
+    
+    handleInputChange(event) {
+        this.setState({[event.target.name]: Moment(event.target.value).format('YYYY-MM-DD')})
     }
 
     render() {
+        const steels = Object.values(this.state.steels);
         return(
             <React.Fragment>
                 <div className="jumbotron mt-5">
                     <h3 className="text-center">Steel Register</h3>
-                    <form className="form-group" method="GET" action="/api/v1/steels/inventory">
+                    <form className="form-group">
                         <Input 
                         id = "startDate"
                         name="startDate"
                         type="Date"
+                        value={this.state.startDate}
                         onChange={this.handleInputChange}
                         placeholder="Start Date"
                         required
                         />
     
                         <Input 
-                        id = "endData"
-                        name="endData"
+                        id = "endDate"
+                        name="endDate"
                         type="Date"
+                        value={this.state.endDate}
                         onChange={this.handleInputChange}
                         placeholder="End Date"
                         required
                         />
     
-                        <Button
+                        <Input
+                        id="submit-btn"
+                        name="submit"
+                        feature="block"
                         variant="primary"
-                        type="submit"
-                        onclick={this.handleSubmit}
-                        title="Submit"/>
+                        type="button"
+                        onClick={this.handleSubmit}
+                        />
                     </form>
                 </div>
-                <table id="students" className="table table-hover">
+                <table id="steels" className="table table-hover">
+                    <thead>
                     <tr className="table-primary">
-                        <th scope="col">
-                            GRN
-                        </th>
-                        <th scope="col">
-                            Grade
-                        </th>
-                        <th scope="col">
-                            Section
-                        </th>
-                        <th scope="col">
-                            Heat No.
-                        </th>
-                        <th scope="col">
-                            Heat Code
-                        </th>
-                        <th scope="col">
-                            Available Quantity(KGS)
-                        </th>
+                        <th scope="col">Challan No</th>
+                        <th scope="col">Grade</th>
+                        <th scope="col">Section</th>
+                        <th scope="col">Heat No.</th>
+                        <th scope="col">Heat Code</th>
+                        <th scope="col">Available Quantity(KGS)</th>
                     </tr>
-                    <tr>
+                    </thead>
                         <tbody>
-                        {this.state.steels.map((steel, index) => {
-                            const { grNo, grade, section, heatNo, heatCode, availableQty} = steel;
-                            return (
-                                <tr key={grNo}>
-                                <th  scope="row">{grNo}</th>
-                                <td>{grade}</td>
-                                <td>{section}</td>
-                                <td>{heatNo}</td>
-                                <td>{heatCode}</td>
-                                <td>{availableQty}</td>
-                            </tr>
-                            )
-                        })}
+                            {steels.map((steel) => (
+                                <tr key={steel.challanNo}>
+                                    <td>{steel.challanNo}</td>
+                                    <td>{steel.grade}</td>
+                                    <td>{steel.section}</td>
+                                    <td>{steel.heatNo}</td>
+                                    <td>{steel.heatCode}</td>
+                                    <td>{steel.availableQty}</td>
+                                </tr>
+                                )
+                            )}
                         </tbody>
-                    </tr>
                 </table>
             </React.Fragment>
         )
