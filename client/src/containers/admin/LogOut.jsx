@@ -16,11 +16,12 @@ export default class LogOut extends Component {
     render() {
         return(
             <Button
+            id="logout"
             variant="danger"
-            feature="block"
+            feature="flex"
             type="submit"
             title="Logout"
-            onClick={this.Logout}
+            onClick={this.logout}
             />
         )
     }

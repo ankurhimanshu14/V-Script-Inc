@@ -17,7 +17,7 @@ export default class App extends Component{
     render() {
         return (
             <BrowserRouter>
-                <nav>
+                <nav className="navbar">
                     <LogOut />
                 </nav>
                 <Switch>

@@ -22,11 +22,14 @@ export default class NewSteelRegistration extends Component {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
+            // mode: 'no-cors',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer refreshToken',
+                'Authorization': `Bearer ` + document.cookie
             },
-            withCredentials: true,
+            'Access-Control-Allow-Credentials': true,
+            credentials: 'same-origin',
             body: JSON.stringify({
                 username: this.state.username,
                 password: this.state.password,
@@ -34,8 +37,9 @@ export default class NewSteelRegistration extends Component {
         };
         
         fetch('http://localhost:5000/api/v1/users/login', requestOptions)
-        .then(res => res.json())
+        .then(blob => blob.json())
         .then(data => {
+            console.log(data);
             if(data.msg === "Authenticated" && data.token) {
                 alert(data.msg)
                 document.cookie = `refreshToken=${data.token}`;
@@ -43,9 +47,8 @@ export default class NewSteelRegistration extends Component {
 
         })
         .catch(err => {
-            alert('There has been a problem with your fetch operation: ' + err);
+            console.log('There has been a problem with your fetch operation: ' + err);
         });
-        console.log(this.state)
     }
 
     render() {

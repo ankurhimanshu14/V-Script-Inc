@@ -57,7 +57,7 @@ module.exports = {
     storeTokenInRedis: (req, res, next) => {
         const { username, ...others } = req._verifiedUser;
         const tokenKey = Date.now() + 5*1000;
-        redisClient.zadd(`TOKEN: ${username}`, tokenKey, req._newToken, function(error, result) {
+        redisClient.zadd(`${username}: TOKEN`, tokenKey, req._newToken, function(error, result) {
             if(error) {
                 res.status(500).json({msg: 'Something went wrong!'}).end();
             } else {
@@ -69,7 +69,7 @@ module.exports = {
         cookieOptions= {
             expires: new Date(Date.now() + 86400*1000),
             httpOnly: true,
-            secure:false,
+            secure: true,
             sameSite:'strict'
         };
         res.cookie('refreshToken', req._newToken, cookieOptions);

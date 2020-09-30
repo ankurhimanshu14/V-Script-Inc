@@ -11,19 +11,23 @@ export default class PartList extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
-    async handleSubmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
         const requestOptions = {
             method: 'GET',
+            mode: 'no-cors',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer refreshToken'
-            }
+                'Authorization': `Bearer ` + document.cookie
+            },
+            'Access-Control-Allow-Credentials': true,
+            credentials: 'include'
         };
         
-        const response = await fetch('http://localhost:5000/api/v1/parts/partList', requestOptions)
-        const data = await response.json();
-        this.setState({parts: data});
+        fetch('http://localhost:5000/api/v1/parts/partList', requestOptions)
+        .then(res => res.json())
+        .then(data => {console.log(data); /*this.setState({parts: data})*/});
     }
 
     render() {
@@ -54,7 +58,7 @@ export default class PartList extends Component {
                     </thead>   
                     <tbody>
                         {parts.map(part => (
-                            <tr key={part.itemCode}>
+                            <tr key={part._id}>
                                 <td>{part.itemCode}</td>
                                 <td>{part.partName}</td>
                                 <td>{part.rawMaterial}</td>
