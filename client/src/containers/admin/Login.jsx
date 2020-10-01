@@ -49,6 +49,7 @@ export default class NewSteelRegistration extends Component {
         .catch(err => {
             console.log('There has been a problem with your fetch operation: ' + err);
         });
+        this.setState(this.state)
     }
 
     render() {

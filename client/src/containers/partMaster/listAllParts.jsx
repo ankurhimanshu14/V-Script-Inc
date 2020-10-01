@@ -11,23 +11,20 @@ export default class PartList extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     };
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
+
         const requestOptions = {
-            method: 'GET',
-            mode: 'no-cors',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ` + document.cookie
-            },
-            'Access-Control-Allow-Credentials': true,
-            credentials: 'include'
+            credentials: 'include',
         };
-        
-        fetch('http://localhost:5000/api/v1/parts/partList', requestOptions)
-        .then(res => res.json())
-        .then(data => {console.log(data); /*this.setState({parts: data})*/});
+
+        const response = await fetch('http://localhost:5000/api/v1/parts/partlist', requestOptions, function(req, res) {
+
+        });
+
+        const data = await response.json();
+        console.log(data);
+        this.setState({parts: data});
     }
 
     render() {

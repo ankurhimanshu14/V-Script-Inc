@@ -18,6 +18,6 @@ router.get('/steels/releaseSteel', auth, releaseSteel.getPartNo, releaseSteel.se
 
 //PART_MASTER
 router.post('/parts/registration', auth, partRegistration.fetchNewPartData, partRegistration.savePartData, partRegistration.response);
-router.get('/parts/partList', auth, partList.fetchFromMongo, partList.response)
+router.get('/parts/partlist', auth, partList.fetchFromMongo, partList.response)
 
 module.exports = router;
