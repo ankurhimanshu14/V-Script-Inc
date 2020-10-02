@@ -13,7 +13,6 @@ module.exports = {
             _clientPassword: req.body.password
         };
 
-        console.log('--------------req._loginDetails----------' + req._loginDetails)
         if(!req._loginDetails) {
             res.status(401).json({msg: 'Credentials not entered'}).end();
         } else {
@@ -26,7 +25,6 @@ module.exports = {
         .catch(err => {
             res.status(401).json({msg: 'Credentials does not match our records.'}).end();
         });
-        console.log('--------------req._foundUser----------' + req._foundUser)
         if(!req._foundUser) {
             res.status(404).json({msg: 'Authentication Failed'}).end();
         } else {
@@ -44,7 +42,6 @@ module.exports = {
                                             }
                                         })
                                         .catch(error => next(error));
-                                        console.log('--------------req._verifiedUser----------' + req._verifiedUser)
                                         next();
     },
 
@@ -52,33 +49,28 @@ module.exports = {
         if(req._verifiedUser) {
             const { _id, username, role, authority, ...other } = req._verifiedUser;
             const tokenPayload = { userId: _id, role: role, authority: authority, username: username };
-            console.log('------------tokenPayload-----------' + tokenPayload.userId)
             req._newToken = jwt.sign(tokenPayload, secretKey, { algorithm: 'HS256'}, {expiresIn: 60*60*24*7 }, function(err, token) {
                 if(err) {
-                    console.log('----------error--------------' + err);
+                    console.log(err);
                 } else {
-                    console.log('-------------token---------------' + token); return token;
+                    return token;
                 }
             })
-            console.log('1-------------req._newToken--------------' + req._newToken)
             next();
         }
     },
     storeTokenInRedis: (req, res, next) => {
-        console.log('2 ----------req._newToken------------' + req._newToken)
         const { username, ...others } = req._verifiedUser;
         const tokenKey = Date.now() + 5*1000;
         redisClient.zadd(`${username}: TOKEN`, tokenKey, req._newToken, function(error, result) {
             if(error) {
                 res.status(500).json({msg: 'Something went wrong!'}).end();
             } else {
-                console.log('------------result-----------' + result)
                 next();
             }
         });
     },
     addTokenToCookie: (req, res, next) => {
-        console.log('3-------------req._newToken--------------' + req._newToken)
         cookieOptions= {
             path: '/',
             expires: new Date(Date.now() + 86400*1000),

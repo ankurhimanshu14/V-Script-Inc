@@ -15,18 +15,10 @@ export default class PartList extends Component {
         event.preventDefault();
 
         const requestOptions = {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ` + document.cookie,
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
-            },
-            'Access-Control-Allow-Credentials': true,
-            credentials: 'include',
+            credentials: 'include'
         };
 
-        const response = await fetch('http://localhost:5000/api/v1/auth/parts/partlist', requestOptions)
+        const response = await fetch('http://localhost:5000/api/v1/private/parts/partlist', requestOptions)
         const data = await response.json();
         console.log(data);
         this.setState({parts: data});

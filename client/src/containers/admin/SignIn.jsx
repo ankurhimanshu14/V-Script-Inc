@@ -22,20 +22,16 @@ export default class NewSteelRegistration extends Component {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: {
-                Accept: 'application/json',
+            headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ` + document.cookie
-            },
-            'Access-Control-Allow-Credentials': true,
-            credentials: 'same-origin',
+            }),
             body: JSON.stringify({
                 username: this.state.username,
                 password: this.state.password,
             })
         };
         
-        fetch('http://localhost:5000/api/v1/users/login', requestOptions)
+        fetch('http://localhost:5000/api/v1/public/users/login', requestOptions)
         .then(blob => blob.json())
         .then(data => {
             console.log(data);
