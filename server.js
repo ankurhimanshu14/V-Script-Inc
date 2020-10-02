@@ -12,7 +12,16 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use('/auth', function(req, res) {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.set('Access-Control-Allow-Credentials', 'true')
+    res.set('Content-Type', 'application/json')
+    if(!req.session) {
+      res.send('Please login first')
+    }
+})
 app.use('/api/v1', v1Routes);
+
 
 app.listen(PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}/`);

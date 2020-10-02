@@ -22,7 +22,6 @@ export default class NewSteelRegistration extends Component {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            // mode: 'no-cors',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
