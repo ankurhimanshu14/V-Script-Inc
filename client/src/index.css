@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  background: lightsteelblue !important;
+  background: white;
   min-height: 100vh;
   display: block;
   font-weight: 400;

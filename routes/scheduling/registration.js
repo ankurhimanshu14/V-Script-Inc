@@ -1,5 +1,5 @@
-const { ITEM_FIELDS, SCHEDULE_FIELDS, ITEM_MODEL, SCHEDULE_MODEL } = require('../../../models/dispatchSchedule/model');
-const { PART_MODEL } = require('../../../models/parts/model');
+const { ITEM_FIELDS, SCHEDULE_FIELDS, ITEM_MODEL, SCHEDULE_MODEL } = require('../../models/schedule');
+const { PART_MODEL } = require('../../models/parts');
 
 module.exports = {
     checkScheduleExists: async (req, res, next) => {

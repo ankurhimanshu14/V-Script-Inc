@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Input from '../../components/useInput';
 
 export default class PartList extends Component {
     constructor(props) {
@@ -7,20 +6,15 @@ export default class PartList extends Component {
         this.state = {
             parts: []
         };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     };
-
-    async handleSubmit(event) {
-        event.preventDefault();
-
+    
+    async componentDidMount() {
         const requestOptions = {
             credentials: 'include'
         };
 
         const response = await fetch('http://localhost:5000/api/v1/private/parts/partlist', requestOptions)
         const data = await response.json();
-        console.log(data);
         this.setState({parts: data});
     }
 
@@ -28,17 +22,6 @@ export default class PartList extends Component {
         const parts = Object.values(this.state.parts);
         return (
             <React.Fragment>
-                <div className="jumbotron mt-5">
-                    <h3 className="text-center">Part List</h3>
-                    <Input
-                        id="submit-btn"
-                        name="submit"
-                        feature="block"
-                        variant="primary"
-                        type="button"
-                        onClick={this.handleSubmit}
-                        />
-                </div>
                 <table id="parts" className="table table-hover">
                     <thead>
                         <tr className="table-primary">

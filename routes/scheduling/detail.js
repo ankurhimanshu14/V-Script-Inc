@@ -1,4 +1,4 @@
-const { SCHEDULE_MODEL } = require('../../../models/dispatchSchedule/model');
+const { SCHEDULE_MODEL } = require('../../models/schedule');
 
 module.exports = {
     fetchSchedule: async (req, res, next) => {

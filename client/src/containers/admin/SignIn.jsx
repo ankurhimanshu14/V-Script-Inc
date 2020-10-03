@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 
-export default class NewSteelRegistration extends Component {
+export default class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,25 +32,26 @@ export default class NewSteelRegistration extends Component {
         };
         
         fetch('http://localhost:5000/api/v1/public/users/login', requestOptions)
-        .then(blob => blob.json())
+        .then(res => res.json())
         .then(data => {
-            console.log(data);
+            alert(data.msg)
             if(data.msg === "Authenticated" && data.token) {
-                alert(data.msg)
                 document.cookie = `refreshToken=${data.token}`;
             }
 
         })
         .catch(err => {
-            console.log('There has been a problem with your fetch operation: ' + err);
+            alert('There has been a problem');
         });
     }
 
     render() {
         return (
             <React.Fragment>
-                <div className="jumbotron mt-5">
-                    <h3 className="text-center">Sign In Here</h3>
+                <div className="signInBox col-md-3 ml-auto mt-5">
+                    <h3 className="text-center">Sign In</h3>
+                    <br/>
+
                     <form className="form-group">
                                              
                         <Input 
