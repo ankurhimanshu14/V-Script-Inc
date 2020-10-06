@@ -1,5 +1,8 @@
 import React , { Component } from 'react';
+<<<<<<< HEAD
 // import Moment from 'moment';
+=======
+>>>>>>> 1f0cc3b6c777b2fad2d1de53f8076ddf1751655a
 import Input from '../../components/useInput';
 
 export default class SteelInventory extends Component {
@@ -15,9 +18,15 @@ export default class SteelInventory extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     };
 
+    handleInputChange(event) {
+        this.setState({[event.target.name]: event.target.value})
+        console.log(this.state);
+    }
+
     async handleSubmit(event) {
         event.preventDefault();
         const requestOptions = {
+<<<<<<< HEAD
             credentials: 'include',
         };
         const result = await fetch('http://localhost:5000/api/v1/private/steels/inventory', requestOptions)
@@ -30,9 +39,18 @@ export default class SteelInventory extends Component {
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value})
     }
+=======
+            credentials: 'include'
+        };
+
+        const response = await fetch('http://localhost:5000/api/v1/private/steels/inventory', requestOptions)
+        const data = await response.json();
+        this.setState({steels: data});
+    }
+>>>>>>> 1f0cc3b6c777b2fad2d1de53f8076ddf1751655a
 
     render() {
-        const steels = Object.values(this.state.steels);
+        const steels = Object.entries(this.state.steels);
         return(
             <React.Fragment>
                 <div className="jumbotron mt-5">
@@ -70,28 +88,25 @@ export default class SteelInventory extends Component {
                 </div>
                 <table id="steels" className="table table-hover">
                     <thead>
-                    <tr className="table-primary">
-                        <th scope="col">Challan No</th>
-                        <th scope="col">Grade</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Heat No.</th>
-                        <th scope="col">Heat Code</th>
-                        <th scope="col">Available Quantity(KGS)</th>
-                    </tr>
-                    </thead>
-                        <tbody>
-                            {steels.map((steel) => (
-                                <tr key={steel.challanNo}>
-                                    <td>{steel.challanNo}</td>
-                                    <td>{steel.grade}</td>
-                                    <td>{steel.section}</td>
-                                    <td>{steel.heatNo}</td>
-                                    <td>{steel.heatCode}</td>
-                                    <td>{steel.availableQty}</td>
-                                </tr>
-                                )
-                            )}
-                        </tbody>
+                        <tr className="table-primary">
+                            <th scope="col">Material Grade</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Heat No</th>
+                            <th scope="col">Heat Code</th>
+                            <th scope="col">Available Quantity (KGS)</th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        {steels.map(steel => (
+                            <tr key={steel._id}>
+                                <td>{steel.grade}</td>
+                                <td>{steel.section}</td>
+                                <td>{steel.heatNo}</td>
+                                <td>{steel.heatCode}</td>
+                                <td>{steel.availableQty}</td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             </React.Fragment>
         )

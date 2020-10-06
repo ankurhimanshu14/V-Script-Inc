@@ -4,7 +4,7 @@ const Input = (props) => {
 	return (
     <div className = "form-group">
       <input
-        className = "form-control"
+        className = "form-control form-control-sm"
         id = { props.name}
         name = {props.name}
         type = {props.type}

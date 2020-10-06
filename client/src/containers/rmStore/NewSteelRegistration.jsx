@@ -36,7 +36,7 @@ export default class NewSteel extends Component {
             withCredentials: true
         };
                 
-        fetch('http://localhost:5000/api/v1/steels/registration', requestOptions)
+        fetch('http://localhost:5000/api/v1/private/steels/registration', requestOptions)
         .then(res => res.json())
         .then(data => {
             alert(('New Steel Added: ' + data))
@@ -53,22 +53,21 @@ export default class NewSteel extends Component {
                 <div className="card m-5">
                     <h3 className="text-center">Steel Register</h3>
                     <form className="form-group">
-                    <table id="steels" className="table table-hover">
-                    <thead>
-                    <tr className="table m-2">
-                        <th scope="col">Challan No</th>
-                        <th scope="col">Challan Date</th>
-                        <th scope="col">Material Grade</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Heat No.</th>
-                        <th scope="col">Heat Code</th>
-                        <th scope="col">Jominy Value</th>
-                        <th scope="col">Approved Components</th>
-                        <th scope="col">Received Quantity(KGS)</th>
-                        <th scope="col">Submit</th>
-                        <th scope="col">Reset</th>
-                    </tr>
-                    </thead>
+                    <table>
+                        <thead className="text-center">
+                            <tr>
+                                <th scope="col"><p>Challan No</p></th>
+                                <th scope="col"><p>Challan Date</p></th>
+                                <th scope="col"><p>Material Grade</p></th>
+                                <th scope="col"><p>Section</p></th>
+                                <th scope="col"><p>Heat No.</p></th>
+                                <th scope="col"><p>Heat Code</p></th>
+                                <th scope="col"><p>Jominy Value</p></th>
+                                <th scope="col"><p>Approved Components</p></th>
+                                <th scope="col"><p>Received Quantity(KGS)</p></th>
+                                <th scope="col"><p>Submit</p></th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr>
                                 <td>
@@ -168,13 +167,6 @@ export default class NewSteel extends Component {
                                     value="Submit"
                                     type="button"
                                     onClick={this.handleSubmit}
-                                    />
-                                </td>
-                                <td>
-                                    <Button
-                                    variant="secondary"
-                                    type="reset"
-                                    title="Reset"
                                     />
                                 </td>
                             </tr>

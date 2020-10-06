@@ -5,7 +5,8 @@ const { registration: userRegistration, authenticate: userAuth, logout: userLogo
 // const { newGateEntry } = require('../gateEntry');
 const { registration: steelRegistration, inventory: steelInventory, releaseToCutting: releaseSteel } = require('../rmStore');
 const { registration: partRegistration, listAll: partList } = require('../partMaster');
-
+const { registration: scheduleRegistration } = require('../scheduling');
+const releaseToCutting = require('../rmStore/releaseToCutting');
 
 //ADMIN
 router.post('/private/users/registration', auth, userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
@@ -23,5 +24,8 @@ router.get('/private/steels/releaseSteel', auth, releaseSteel.getPartNo, release
 //PART_MASTER
 router.post('/private/parts/registration', auth, partRegistration.fetchNewPartData, partRegistration.savePartData, partRegistration.response);
 router.get('/private/parts/partlist', auth, partList.fetchFromMongo, partList.response)
+
+//SCHEDULE
+router.post('/private/schedule/registration', auth, scheduleRegistration.checkScheduleExists, scheduleRegistration.fetchScheduleItems, scheduleRegistration.response);
 
 module.exports = router;

@@ -1,11 +1,11 @@
 const { STEEL_MODEL } = require('../../models/steels');
+const Moment = require('moment');
 
 module.exports = {
     getDates: (req, res, next) => {
-
         req._duration = {
-            _startDate: req.body.startDate,
-            _endDate: req.body.endDate
+            _startDate: Moment(req.body.startDate).format('YYYY-MM-DD'),
+            _endDate: Moment(req.body.endDate).format('YYYY-MM-DD')
         };
         next();
     },
@@ -15,8 +15,8 @@ module.exports = {
             $and: [
                 {
                     challanDate: {
-                        $gte: new Date(new Date(req._duration._startDate).setHours(5, 30, 00)),
-                        $lt: new Date(new Date(req._duration._endDate).setHours(29, 29, 59))
+                        $gte: req._duration._startDate,
+                        $lt: req._duration._endDate
                     }
                 },
                 {
@@ -28,22 +28,18 @@ module.exports = {
 
         }).sort({ challanDate: 'asc'})
         .then(result => {
-            return result;
+            return {status: 200, error: null, data: result};
         })
         .catch(err => {
-            res.status(404).json({ error: err, data: null, msg: "Couldn't retrieve inventory" }).end();
+            return { status: 404, error: "Error: "+err, data: null};
         })
         next();
     },
+
     response: (req, res, next) => {
-        if(req._inventory) {
-            const { _id, ...other } = req._inventory;
-            res.status(200).json({ error: null, data: other, msg: 'Success' }).end();
-            next();
-        } else {
-            res.status(404).end();
-        }
-
+        const {error, data, msg } = req._inventory;
+        console.log(data);
+        res.json(data).end();
+        next();
     }
-
 }

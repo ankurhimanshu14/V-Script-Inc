@@ -1,4 +1,4 @@
-const Schema = require('../../_helpers/db');
+const Schema = require('../_helpers/db');
 const mongoose = require('mongoose');
 
 const ITEM_FIELDS = {

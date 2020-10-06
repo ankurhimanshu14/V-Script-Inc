@@ -2,17 +2,35 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
 
-export default class SignIn extends Component {
+export default class Schedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'username': '',
-            'password': ''
-        };
+            'year': '',
+            'month': '',
+            'partNo': '',
+            'mostCriticalQty': {
+                'quantity': '',
+                'commitmentDate': ''
+            },
+            'criticalQty': {
+                'quantity': '',
+                'commitmentDate': ''
+            },
+            'mainQty': {
+                'quantity': '',
+                'commitmentDate': ''
+            },
+            'revisedQty': {
+                'quantity': '',
+                'commitmentDate': ''
+            },
+            'receivedTillDate': ''
+        }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-    };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value})
@@ -22,46 +40,50 @@ export default class SignIn extends Component {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: new Headers({
+            headers: {
                 'Content-Type': 'application/json',
-            }),
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-            })
+                'Authorization': 'Bearer refreshToken'
+            },
+            withCredentials: true
         };
-        
-        fetch('http://localhost:5000/api/v1/public/users/login', requestOptions)
+                
+        fetch('http://localhost:5000/api/v1/private/schedule/registration', requestOptions)
         .then(res => res.json())
         .then(data => {
-            alert(data.msg)
-            if(data.msg === "Authenticated" && data.token) {
-                document.cookie = `refreshToken=${data.token}`;
-                window.location.reload();
-            }
-
+            alert(('New Schedule Added: ' + data))
         })
         .catch(err => {
-            alert('There has been a problem');
+            alert('There has been a problem with your fetch operation: ' + err);
         });
+        this.setState();
     }
 
     render() {
         return (
             <React.Fragment>
                 <div className="signInBox col-md-3 ml-auto mt-5">
-                    <h3 className="text-center">Sign In</h3>
+                    <h3 className="text-center">New Schedule</h3>
                     <br/>
 
                     <form className="form-group">
                                              
                         <Input 
-                        id = "username"
-                        name="username"
+                        id = "year"
+                        name="year"
                         type="text"
-                        value={this.state.username}
+                        value={this.state.year}
                         onChange={this.handleInputChange}
-                        placeholder="Username"
+                        placeholder="Year"
+                        required
+                        />
+
+                        <Input 
+                        id = "month"
+                        name="month"
+                        type="text"
+                        value={this.state.month}
+                        onChange={this.handleInputChange}
+                        placeholder="Month"
                         required
                         />
                         
