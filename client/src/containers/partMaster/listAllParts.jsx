@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Checkbox from '../../components/useCheckbox';
 
 export default class PartList extends Component {
     constructor(props) {

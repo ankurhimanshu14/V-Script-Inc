@@ -1,8 +1,4 @@
 import React , { Component } from 'react';
-<<<<<<< HEAD
-// import Moment from 'moment';
-=======
->>>>>>> 1f0cc3b6c777b2fad2d1de53f8076ddf1751655a
 import Input from '../../components/useInput';
 
 export default class SteelInventory extends Component {
@@ -26,20 +22,6 @@ export default class SteelInventory extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const requestOptions = {
-<<<<<<< HEAD
-            credentials: 'include',
-        };
-        const result = await fetch('http://localhost:5000/api/v1/private/steels/inventory', requestOptions)
-        .then(response => {console.log(response); return response.json()})
-        .then(data => { console.log(data); return data })
-        .then(err => alert(err))
-        this.setState({steels: result});
-    }
-    
-    handleInputChange(event) {
-        this.setState({[event.target.name]: event.target.value})
-    }
-=======
             credentials: 'include'
         };
 
@@ -47,7 +29,6 @@ export default class SteelInventory extends Component {
         const data = await response.json();
         this.setState({steels: data});
     }
->>>>>>> 1f0cc3b6c777b2fad2d1de53f8076ddf1751655a
 
     render() {
         const steels = Object.entries(this.state.steels);

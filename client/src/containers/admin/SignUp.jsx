@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
-import Button  from '../../components/useButton';
 import Checkbox from '../../components/useCheckbox';
 
 export default class SignUp extends Component {

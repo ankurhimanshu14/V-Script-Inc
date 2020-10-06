@@ -5,62 +5,44 @@ export default class Dropdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen: false
+          menu: [],
+          isOpen: false
         };
+
+        this.showDropdownMenu = this.showDropdownMenu.bind(this);
+        this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
+        this.renderSubMenu = this.renderSubMenu.bind(this);
     }
 
-    toggle = (event) => {
-        // event.preventDefault();
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
+    showDropdownMenu(event) {
+        event.preventDefault();
+        this.setState({ displayMenu: true }, () => {
+        document.addEventListener('click', this.hideDropdownMenu);
+        });
+    }
+    
+    hideDropdownMenu() {
+        this.setState({ displayMenu: false }, () => {
+            document.removeEventListener('click', this.hideDropdownMenu);
+        });
+    }
+
+    renderSubMenu() {
+      this.subMenu.map((item, i) => (
+      <li key={i}><Link to={item.href}>{item.name}</Link></li>
+      ))
     }
 
     render() {
         return (
-            <React.Fragment>
-                <div onClick={(e) => this.toggle(e)} className="header">{this.props.title}</div>
-                { this.state.open ? <div className="content">{this.props.children}</div> : null }
-                {/* <ul className="links">
-                <li className="dropdown">
-                        <Link to="#" className="trigger-drop">Admin<i className="arrow" /></Link>
-                        <ul className="drop">
-                            <li><Link to="#">Sign Up</Link></li>
-                            <li><Link to="#">Update Password</Link></li>
-                            <li><Link to="#">User Details</Link></li>
-                        </ul>
-                    </li>
-                    <li className="dropdown">
-                        <Link to="#" className="trigger-drop">Masters<i className="arrow" /></Link>
-                        <ul className="drop">
-                            <li><Link to="#">Item Master</Link></li>
-                            <li><Link to="#">Part Master</Link></li>
-                            <li><Link to="#">Machine Master</Link></li>
-                        </ul>
-                    </li>
-
-                    <li className="dropdown">
-                        <Link to="#" className="trigger-drop">Departments<i className="arrow" /></Link>
-                        <ul className="drop">
-                            <li><Link to="#">Gate Entry</Link></li>
-                            <li><Link to="#">Raw Material Store</Link></li>
-                            <li><Link to="#">Engineering</Link></li>
-                            <li><Link to="#">Production</Link></li>
-                            <li><Link to="#">Quality Assurance</Link></li>
-                            <li><Link to="#">Dispatch</Link></li>
-                        </ul>
-                    </li>
-                    <li className="dropdown">
-                        <Link to="#" className="trigger-drop">Support<i className="arrow" /></Link>
-                        <ul className="drop">
-                            <li><Link to="#">Maintenance</Link></li>
-                            <li><Link to="#">Tool Room</Link></li>
-                            <li><Link to="#">Human Resource</Link></li>
-                            <li><Link to="#">General Store</Link></li>
-                        </ul>
-                    </li>
-                </ul> */}
-            </React.Fragment>
-        )
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" to={this.props.navLink} onClick={this.showDropdownMenu}>{this.props.navName}</Link>
+                <li>
+                  {this.props.navName} {this.props.subMenu ? (typeof this.props.subMenu=="object" ? <ul>{this.renderSubMenu()}</ul> : null) : null}
+                </li>
+            </li>
+          </>
+        );
+      }
     }
-}
