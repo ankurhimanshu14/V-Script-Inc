@@ -16,6 +16,8 @@ import LogOut from './containers/admin/LogOut';
 import NewPart from './containers/partMaster/NewPartRegistration';
 import ScheduleIndex from './containers/schedule/ScheduleIndex';
 import NewSchedule from './containers/schedule/NewSchedule';
+import ProductionIndex from './containers/production/ProductionIndex';
+import Cutting from './containers/production/Cutting';
 
 export default class App extends Component{
 
@@ -80,6 +82,8 @@ export default class App extends Component{
                     <PrivateRoutes component={NewSchedule} path="/schedule/registration" exact />
                     <PrivateRoutes component={NewPart} path="/parts/registration" exact />
                     <PrivateRoutes component={PartList} path="/parts/partlist" exact />
+                    <PrivateRoutes component={ProductionIndex} path="/production" exact />
+                    <PrivateRoutes component={Cutting} path="/production/cutting" exact />
                 </Switch>
                 </div>
             </BrowserRouter>
