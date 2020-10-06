@@ -37,6 +37,7 @@ export default class SignIn extends Component {
             alert(data.msg)
             if(data.msg === "Authenticated" && data.token) {
                 document.cookie = `refreshToken=${data.token}`;
+                window.location.reload();
             }
 
         })

@@ -13,6 +13,7 @@ import PartList from './containers/partMaster/ListAllParts';
 import PrivateRoutes from './containers/admin/PrivateRoutes';
 import PublicRoutes from './containers/admin/PublicRoutes';
 import LogOut from './containers/admin/LogOut';
+import Dropdown from './components/useDropdown';
 import NewPart from './containers/partMaster/NewPartRegistration';
 import ScheduleIndex from './containers/schedule/ScheduleIndex';
 import NewSchedule from './containers/schedule/NewSchedule';
@@ -22,11 +23,11 @@ export default class App extends Component{
     render() {
         return (
             <BrowserRouter>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <Link className="navbar-brand" to="/">MWSPL</Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">MWS+</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="nav nav-tabs justify-content-center">
