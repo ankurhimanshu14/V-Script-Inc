@@ -2,14 +2,18 @@ const router = require('express').Router();
 
 const auth = require('./auth');
 const { registration: userRegistration, authenticate: userAuth, logout: userLogout } = require('../admin');
+// const { newGateEntry } = require('../gateEntry');
 const { registration: steelRegistration, inventory: steelInventory, releaseToCutting: releaseSteel } = require('../rmStore');
 const { registration: partRegistration, listAll: partList } = require('../partMaster');
-const releaseToCutting = require('../rmStore/releaseToCutting');
+
 
 //ADMIN
 router.post('/private/users/registration', auth, userRegistration.fetchUserData, userRegistration.saveToMongo, userRegistration.response);
 router.post('/public/users/login', userAuth.fetchLoginDetails, userAuth.searchInMongo, userAuth.verifyUser, userAuth.createToken, userAuth.storeTokenInRedis, userAuth.addTokenToCookie);
-router.get('/private/users/logout', userLogout.deleteTokens);
+router.get('/private/users/logout', auth, userLogout.deleteTokens);
+
+//GATE_ENTRY
+// router.post('/private/items/newGateEntry', newGateEntry.fetchNewItemData, newGateEntry.saveItemData, newGateEntry.response);
 
 //RM_STORE
 router.post('/private/steels/registration', auth, steelRegistration.fetchNewSteelData, steelRegistration.saveSteelData, steelRegistration.response);

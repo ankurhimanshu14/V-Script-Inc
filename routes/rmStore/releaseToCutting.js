@@ -10,7 +10,7 @@ module.exports = {
         req._availableSteel = await STEEL_MODEL.find({
             $and: [
                 {
-                    approvals: { $elemMatch: req._partNo },
+                    approvals: { $elemMatch: {partNo: req._partNo} },
                 },
                 {
                     heatStatus: true
@@ -22,7 +22,7 @@ module.exports = {
             return result;
         })
         .catch(err => {
-            res.status(404).json({ error: err, data: null, msg: "Couldn't retrieve approved steel" }).end();
+            res.status(404).json({ error: err, data: null, msg: "Couldn't retrieve approved steel" + err }).end();
         })
         console.log(req._availableSteel);
         next();
@@ -30,11 +30,20 @@ module.exports = {
     // selectSteel: (req, res, next) => {
 
     // },
-    // retrieveCutWeight: (req, res, next) => {
-    //     const cutWeight = 4.7;
-    //     req._totalWeight = cutWeight * req._plannedQty;
-    //     next();
-    // },
+    retrieveCutWeight: async (req, res, next) => {
+        const cutWeight = await PART_MODEL.findOne({
+            partNo: req._partNo
+        }, cutWeight)
+        .then(result => {
+            console.log(result)
+            return result;
+        })
+        .catch(err => {
+            res.status(404).json({ error: err, data: null, msg: "Part does not exist" }).end();
+        })
+        req._totalWeight = cutWeight * req._plannedQty;
+        next();
+    },
     // updateInventory: (req, res, next) => {
     //     const remQty = req._availableSteel.availableQty - totalWeight;
     //     req._updateSteel = await STEEL_MODEL.findOneAndUpdate({

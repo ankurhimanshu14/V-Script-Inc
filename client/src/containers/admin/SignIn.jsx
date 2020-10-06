@@ -38,6 +38,9 @@ export default class NewSteelRegistration extends Component {
             if(data.msg === "Authenticated" && data.token) {
                 alert(data.msg)
                 document.cookie = `refreshToken=${data.token}`;
+                window.location.reload();
+            } else {
+                window.location.reload();
             }
 
         })

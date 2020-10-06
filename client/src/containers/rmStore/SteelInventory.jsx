@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import Moment from 'moment';
+// import Moment from 'moment';
 import Input from '../../components/useInput';
 
 export default class SteelInventory extends Component {
@@ -18,21 +18,17 @@ export default class SteelInventory extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer refreshToken'
-            },
-            body: JSON.stringify()
+            credentials: 'include',
         };
-        const response = await fetch('http://localhost:5000/api/v1/steels/inventory', requestOptions)
-        const data = await response.json();
-        console.log(data);
-        this.setState({steels: data});
+        const result = await fetch('http://localhost:5000/api/v1/private/steels/inventory', requestOptions)
+        .then(response => {console.log(response); return response.json()})
+        .then(data => { console.log(data); return data })
+        .then(err => alert(err))
+        this.setState({steels: result});
     }
     
     handleInputChange(event) {
-        this.setState({[event.target.name]: Moment(event.target.value).format('YYYY-MM-DD')})
+        this.setState({[event.target.name]: event.target.value})
     }
 
     render() {

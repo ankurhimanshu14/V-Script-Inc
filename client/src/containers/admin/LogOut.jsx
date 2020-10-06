@@ -4,6 +4,7 @@ import Button from '../../components/useButton';
 export default class LogOut extends Component {
 
     logout() {
+        console.log(document.cookie)
         document.cookie
         .split(";")
         .forEach((c) => {
@@ -11,7 +12,7 @@ export default class LogOut extends Component {
               .replace(/^ +/, "")
               .replace(/=.*/, "=;expires=" + new Date(0) + ";path=/");
           });
-          window.location.href = "/users/login";
+          window.location.reload();
     }
     render() {
         return(
