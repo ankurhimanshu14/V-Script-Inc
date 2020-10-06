@@ -8,14 +8,7 @@ module.exports = {
     },
     searchInMongo: async (req, res, next) => {
         req._availableSteel = await STEEL_MODEL.find({
-            $and: [
-                {
-                    approvals: { $elemMatch: {partNo: req._partNo} },
-                },
-                {
-                    heatStatus: true
-                }
-            ]
+                    'approvals': { $elemMatch: {'partNo': req._partNo }}
         }, 'challanNo grade section heatNo heatCode availableQty').sort({challanDate: 'asc'})
         .then(result => {
             console.log(result)

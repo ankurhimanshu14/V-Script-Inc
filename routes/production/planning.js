@@ -1,18 +1,20 @@
 const jwt = require('jsonwebtoken');
-const { FORGING_PLAN_FIELDS, FORGING_PLAN_MODEL } = require('../../../models/forgingPlan/model');
-const { PART_MODEL } = require('../../../models/parts/model');
+const { FORGING_PLAN_FIELDS, FORGING_PLAN_MODEL } = require('../../models/forgingPlan');
+const { PART_MODEL } = require('../../models/parts');
 
 const jwtKey = process.env.JWT_SECRET_KEY;
 
 module.exports = {
     fetchPlanData: async (req, res, next) => {
         req._newPlan = new FORGING_PLAN_MODEL({
-            [FORGING_PLAN_FIELDS.PLAN_NO]: Date.now(),
-            [FORGING_PLAN_FIELDS.PROD_ORDER]: req.body.prodOrder,
-            [FORGING_PLAN_FIELDS.MACHINE_NAME]: req.body.machineName,
-            [FORGING_PLAN_FIELDS.DIE_NO]: req.body.dieNo,
-            [FORGING_PLAN_FIELDS.PLANNED_QTY]: req.body.plannedQty,
-            [FORGING_PLAN_FIELDS.MODIFIED_ON]: Date.now()
+            [FORGING_PLAN_FIELDS.PLAN_DATE]: Date.now(),
+            [FORGING_PLAN_FIELDS.PLANNING]: {
+                [FORGING_PLAN_FIELDS.MACHINE_NAME]: req.body.machineName,
+                [FORGING_PLAN_FIELDS.CONTRACTOR_NAME]: req.body.contractorName,
+                [FORGING_PLAN_FIELDS.DIE_NO]: req.body.dieNo,
+                [FORGING_PLAN_FIELDS.PLANNED_QTY]: req.body.plannedQty,
+                [FORGING_PLAN_FIELDS.MODIFIED_ON]: Date.now()
+            }
         });
 
         req._newPlan.partNo = await PART_MODEL.findOne({ 'partNo': req.body.partNo })
