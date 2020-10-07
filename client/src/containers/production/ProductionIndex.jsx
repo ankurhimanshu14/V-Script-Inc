@@ -6,7 +6,7 @@ export default class PartIndex extends Component {
     render() {
         return(
             <div>
-                <ul>
+                <ul className="drop">
                     <li>
                         <Link to ="/production/cutting">Cutting</Link>
                     </li>

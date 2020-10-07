@@ -5,7 +5,7 @@ const PublicRoutes = ({component: Component, restricted, ...rest}) => {
     return (
         <Route {...rest} render={props => (
             document.cookie && restricted ?
-                <Redirect to="/index" />
+                <Redirect to="/" />
             : <Component {...props} />
         )} />
     );
