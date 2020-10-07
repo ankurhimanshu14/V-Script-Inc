@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const auth = require('./auth');
 const { registration: userRegistration, authenticate: userAuth, logout: userLogout } = require('../admin');
-// const { newGateEntry } = require('../gateEntry');
+const { newGateEntry, listGRN } = require('../gateEntry');
 const { registration: steelRegistration, inventory: steelInventory, releaseToCutting: releaseSteel } = require('../rmStore');
 const { registration: partRegistration, listAll: partList } = require('../partMaster');
 const { registration: scheduleRegistration } = require('../scheduling');
@@ -13,7 +13,8 @@ router.post('/public/users/login', userAuth.fetchLoginDetails, userAuth.searchIn
 router.get('/private/users/logout', auth, userLogout.deleteTokens);
 
 //GATE_ENTRY
-// router.post('/private/items/newGateEntry', newGateEntry.fetchNewItemData, newGateEntry.saveItemData, newGateEntry.response);
+router.post('/private/items/newGateEntry', auth, newGateEntry.fetchNewItemData, newGateEntry.saveItemData, newGateEntry.response);
+router.get('/private/items/listGRN', auth, listGRN.fetchFromMongo, listGRN.response);
 
 //RM_STORE
 router.post('/private/steels/registration', auth, steelRegistration.fetchNewSteelData, steelRegistration.saveSteelData, steelRegistration.response);

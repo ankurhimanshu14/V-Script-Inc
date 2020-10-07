@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import Button from '../../components/useButton';
 
 export default class LogOut extends Component {
+    constructor(props) {
+        super(props);
+
+        this.logout = this.logout.bind(this);
+    }
 
     logout() {
         console.log(document.cookie)

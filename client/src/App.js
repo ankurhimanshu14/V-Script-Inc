@@ -13,6 +13,8 @@ import LogOut from './containers/admin/LogOut';
 import NewPart from './containers/partMaster/NewPartRegistration';
 import NewSchedule from './containers/schedule/NewSchedule';
 import Cutting from './containers/production/Cutting';
+import NewGRN from './containers/grn/NewGRN';
+import ItemList from './containers/grn/ListGRN';
 
 export default class App extends Component{
 
@@ -32,12 +34,13 @@ export default class App extends Component{
                         </li>
                         <li className="dropdown"><Link to="/gateEntry" className="trigger-drop">GRN Entry<i className="arrow" /></Link>
                             <ul className="drop">
-                                <li><Link to ="/grn/grnEntry">Add GRN</Link></li>
+                                <li><Link to ="/gateEntry/newGRN">Add GRN</Link></li>
+                                <li><Link to ="/gateEntry/listGRN">List GRN</Link></li>
                             </ul>
                         </li>
                         <li className="dropdown"><Link to="/steels" className="trigger-drop">Steels<i className="arrow"></i></Link>
                             <ul className="drop">
-                                <li><Link to ="/steels/registration">Add Steel</Link></li>
+                                <li><Link to ="/steels/registration">Assign Parts</Link></li>
                                 <li><Link to ="/steels/inventory">Steel Inventory</Link></li>
                                 <li><Link to ="/steels/request">Steel Request</Link></li>
                             </ul>
@@ -72,7 +75,8 @@ export default class App extends Component{
                 <PublicRoutes restricted={true} component={SignIn} path="/" exact />
                 <PublicRoutes restricted={false} component={ForgotPassword} path="/users/forgotpassword" exact />
                 <PrivateRoutes component={SignUp} path="/users/registration" exact />
-                {/* <PrivateRoutes component={grnEntry} path="/grn/newGRN" exact /> */}
+                <PrivateRoutes component={NewGRN} path="/gateEntry/newGRN" exact />
+                <PrivateRoutes component={ItemList} path="/gateEntry/listGRN" exact />
                 <PrivateRoutes component={NewSteelRegistration} path="/steels/registration" exact />
                 <PrivateRoutes component={SteelInventory} path="/steels/inventory" exact />
                 <PrivateRoutes component={NewSchedule} path="/schedule/registration" exact />

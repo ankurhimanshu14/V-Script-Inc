@@ -23,7 +23,7 @@ const ITEM_SCHEMA = {
     } }
 };
 
-const itemSchema = new Schema(ITEM_SCHEMA);
+const componentSchema = new Schema(ITEM_SCHEMA);
 
 const SCHEDULE_FIELDS = {
     MONTH: 'month',
@@ -42,7 +42,7 @@ const SCHEDULE_SCHEMA = {
     [SCHEDULE_FIELDS.CREATED_ON]: { type: Date, default: Date.now },
     [SCHEDULE_FIELDS.MODIFIED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
     [SCHEDULE_FIELDS.MODIFIED_ON]: { type: Date },
-    [SCHEDULE_FIELDS.SCHEDULE_ITEMS]: [itemSchema]
+    [SCHEDULE_FIELDS.SCHEDULE_ITEMS]: [componentSchema]
 };
 
 const scheduleSchema = new Schema(SCHEDULE_SCHEMA);
@@ -50,6 +50,6 @@ const scheduleSchema = new Schema(SCHEDULE_SCHEMA);
 module.exports = {
     ITEM_FIELDS: ITEM_FIELDS,
     SCHEDULE_FIELDS: SCHEDULE_FIELDS,
-    ITEM_MODEL: mongoose.model('Item', itemSchema),
+    ITEM_MODEL: mongoose.model('Component', componentSchema),
     SCHEDULE_MODEL: mongoose.model('Schedule', scheduleSchema)
 }

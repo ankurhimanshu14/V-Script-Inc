@@ -46,7 +46,7 @@ export default class SignUp extends Component {
                 'acceptTerms': this.state.acceptTerms
             })
         };
-        await fetch('http://localhost:5000/api/v1/privateusers/registration', requestOptions)
+        await fetch('http://localhost:5000/api/v1/private/users/registration', requestOptions)
         .then(res => res.json())
         .then(data => {
             alert(data);
