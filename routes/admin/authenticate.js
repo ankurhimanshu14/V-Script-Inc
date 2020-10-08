@@ -8,6 +8,7 @@ const secretKey = process.env.JWT_SECRET_KEY;
 
 module.exports = {
     fetchLoginDetails: (req, res, next) => {
+        console.log('-------------fetched data------------', req.body);
         req._loginDetails = {
             _username: req.body.username,
             _clientPassword: req.body.password

@@ -18,41 +18,31 @@ export default class SignUp extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleCheckBox = this.handleCheckBox.bind(this);
     };
-
+    
     handleInputChange(event) {
-        this.setState({[event.target.name]: event.target.value});
+        this.setState({[event.target.name]: event.target.value})
     }
 
-    handleCheckBox(event) {
-        this.setState({[event.target.acceptTerms]: true })
-    }
-
-    async handleSubmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'employeeId': this.state.employeeId,
-                'email': this.state.email,
-                'username': this.state.username,
-                'password': this.state.password,
-                'role': this.state.role,
-                'authority': this.state.authority,
-                'acceptTerms': this.state.acceptTerms
-            })
+            // headers: {
+            //     'Content-Type': 'application/json',
+            //     'Authorization': 'Bearer refreshToken'
+            // },
+            body: JSON.stringify(this.state),
+            credentials: 'include'
         };
-        await fetch('http://localhost:5000/api/v1/private/users/registration', requestOptions)
+                
+        fetch('http://localhost:5000/api/v1/private/users/registration', requestOptions)
         .then(res => res.json())
         .then(data => {
-            alert(data);
+            alert(('New User Added: ' + data))
         })
         .catch(err => {
-            alert('There has been a problem');
+            alert('There has been a problem with your fetch operation: ' + err);
         });
     }
 
@@ -61,7 +51,7 @@ export default class SignUp extends Component {
             <React.Fragment>
                 <div className="signInBox col-md-3 ml-auto mt-5">
                     <h3 className="text-center">Sign Up Here</h3>
-                    <form className="form-group" method="POST">
+                    <form className="form-group">
                         <Input 
                         id = "employeeId"
                         name="employeeId"
@@ -125,8 +115,6 @@ export default class SignUp extends Component {
                         <Checkbox
                         name="acceptTerms"
                         title="Accept Terms and Conditions"
-                        value={this.state.acceptTerms}
-                        onChange={this.handleCheckBox}
                         required
                         />
     

@@ -26,24 +26,28 @@ export default class NewSteel extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.setState(this.state);
+        const data = this.state;
+
         const requestOptions = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer refreshToken'
-            },
-            withCredentials: true
+            credentials: 'include',
+            body: JSON.stringify(data)
         };
-                
+        console.log('------------reqOPtions-------------------', requestOptions.body);
         fetch('http://localhost:5000/api/v1/private/steels/registration', requestOptions)
-        .then(res => res.json())
-        .then(data => {
-            alert(('New Steel Added: ' + data))
+        .then(response => response.json())
+        .then(result => {
+            if(result) {
+                this.setState(result)
+                alert(result.data.grNo);
+            } else {
+                alert('Saving error');
+            }
         })
         .catch(err => {
             alert('There has been a problem with your fetch operation: ' + err);
         });
-        this.setState();
     }
 
     render() {

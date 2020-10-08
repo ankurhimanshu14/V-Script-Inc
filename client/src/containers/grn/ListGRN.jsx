@@ -29,7 +29,7 @@ export default class ItemList extends Component {
                 <div className="row">
                     <div>
                     <div className="table-responsive" data-pattern="priority-columns">
-                        <table summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" className="table table-bordered table-hover">
+                        <table className="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th data-priority="1">GRN</th>

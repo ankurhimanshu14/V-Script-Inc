@@ -18,32 +18,25 @@ export default class SignIn extends Component {
         this.setState({[event.target.name]: event.target.value})
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
             headers: new Headers({
                 'Content-Type': 'application/json',
             }),
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-            })
+            body: JSON.stringify(this.state)
         };
         
-        fetch('http://localhost:5000/api/v1/public/users/login', requestOptions)
-        .then(res => res.json())
-        .then(data => {
-            alert(data.msg)
-            if(data.msg === "Authenticated" && data.token) {
-                document.cookie = `refreshToken=${data.token}`;
+        const response = await fetch('http://localhost:5000/api/v1/public/users/login', requestOptions)
+        const result = await response.json()
+            alert(result.msg)
+            if(result.msg === "Authenticated" && result.token) {
+                document.cookie = `refreshToken=${result.token}`;
                 window.location.reload();
+            } else {
+                alert('There has been a problem', result.err);
             }
-
-        })
-        .catch(err => {
-            alert('There has been a problem');
-        });
     }
 
     render() {

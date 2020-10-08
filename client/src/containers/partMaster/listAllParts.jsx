@@ -23,15 +23,21 @@ export default class PartList extends Component {
         const parts = Object.values(this.state.parts);
         return (
             <React.Fragment>
-                <table id="parts" className="table table-hover">
+                <h2>Parts Register</h2>
+                <div className="container">
+                <div className="row">
+                    <div>
+                    <div className="table-responsive" data-pattern="priority-columns">
+                        <table id="parts" className="table table-bordered table-hover">
                     <thead>
-                        <tr className="table-primary">
-                            <th scope="col">Item Code</th>
-                            <th scope="col">Part Name</th>
-                            <th scope="col">Raw Material</th>
-                            <th scope="col">Customer Name</th>
-                            <th scope="col">Cut Weight (KGS)</th>
-                            <th scope="col">Standard Weight (KGS)</th>
+                        <tr>
+                            <th priority="1">Item Code</th>
+                            <th priority="2">Part Name</th>
+                            <th priority="3">Raw Material</th>
+                            <th priority="4">Customer Name</th>
+                            <th priority="5">Cut Weight (KGS)</th>
+                            <th priority="6">Standard Weight (KGS)</th>
+                            <th priority="7">Select</th>
                         </tr>
                     </thead>   
                     <tbody>
@@ -48,6 +54,10 @@ export default class PartList extends Component {
                                 ))}
                         </tbody>
                     </table>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
             </React.Fragment>
         )
     }

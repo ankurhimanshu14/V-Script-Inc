@@ -30,6 +30,8 @@ app.use(function(req, res, next) {
 
   res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.set('Accept', 'application/json');
+  res.set('Content-Type', 'application/x-www-form-urlencoded');
   res.set('Access-Control-Allow-Credentials', 'true');
 
   next();
