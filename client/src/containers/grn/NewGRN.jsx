@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 import Input from '../../components/useInput';
-import Checkbox from '../../components/useCheckbox';
 
 export default class NewGRN extends Component {
     constructor() {
@@ -40,6 +38,7 @@ export default class NewGRN extends Component {
 
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value});
+                this.setState({[event.target.name]: event.target.value});
     }
 
     async handleSubmit(event) {
@@ -47,44 +46,21 @@ export default class NewGRN extends Component {
 
         const requestOptions = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'grn': {
-                    'grNo':this.state.grn.grNo,
-                    'creationRemarks': this.state.grn.creationRemarks
-                },
-                'challanNo': this.state.challanNo,
-                'challanDate': this.state.challanDate,
-                'vehicleNo': this.state.vehicleNo,
-                'partyCode': this.state.partyCode,
-                'item': {
-                    'itemCode': this.state.item.itemCode,
-                    'itemDescription': this.state.item.itemDescription,
-                    'itemHeader':this.state.item.itemHeader
-                },
-                'poNo': this.state.poNo,
-                'hsnCode': this.state.hsnCode,
-                'receiving': {
-                    'quantity': this.state.receiving.quantity,
-                    'uom': this.state.receiving.uom
-                },
-                'taxableValue': this.state.taxableValue,
-                'rate&Amount': {
-                    'cgst': this.state["rate&Amount"].cgst,
-                    'sgst': this.state["rate&Amount"].sgst,
-                    'igst': this.state["rate&Amount"].igst
-                }
-            })
+            credentials: 'include',
+            body: JSON.stringify(this.state)
         };
-        await fetch('http://localhost:5000/api/v1/private/items/newGateEntry', requestOptions)
-        .then(res => res.json())
-        .then(data => {
-            alert('GRN Entry Successful');
+        await fetch('http://localhost:5000/api/v1/private/items/registration', requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if(result) {
+                console.log('-------------this.state-------------', this.state);
+                alert("Gate Entry Successful. GRN: ", result.data.grn.grNo);
+            } else {
+                alert('Saving error');
+            }
         })
         .catch(err => {
-            alert('There has been a problem');
+            alert('There has been a problem with your fetch operation: ' + err);
         });
     }
 
@@ -93,20 +69,13 @@ export default class NewGRN extends Component {
             <React.Fragment>
                 
                 <div className="container">
-                    <div className="interior">
-                        <Link className="btn" to="/gateEntry/newGRN">New Gate Entry</Link>
-                    </div>
-                </div>
-                <div id="open-modal" className="modal-window">
-                    <div>
-                        <Link to="/gateEntry/listGRN" title="Close" className="modal-close">Close</Link>
                         <h1>Goods Receipt Note</h1>
                         <div>
-                            <form className="form-group" method="POST">
+                            <form className="form-group">
                             <Input 
                             id = "grNo"
                             name="grNo"
-                            type="number"
+                            type="Number"
                             value={this.state.grn.grNo}
                             onChange={this.handleInputChange}
                             placeholder="GRN"
@@ -114,60 +83,151 @@ export default class NewGRN extends Component {
                             />
         
                             <Input 
-                            id = "email"
-                            name="email"
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.handleInputChange}
-                            placeholder="Email"
-                            required
-                            />
-                            
-                            <Input 
-                            id = "username"
-                            name="username"
+                            id = "creationRemarks"
+                            name="creationRemarks"
                             type="text"
-                            value={this.state.username}
+                            value={this.state.grn.creationRemarks}
                             onChange={this.handleInputChange}
-                            placeholder="Username"
+                            placeholder="Remarks"
                             required
                             />
                             
                             <Input 
-                            id = "password"
-                            name="password"
-                            type="password"
-                            value={this.state.password}
+                            id = "challanNo"
+                            name="challanNo"
+                            type="Number"
+                            value={this.state.challanNo}
                             onChange={this.handleInputChange}
-                            placeholder="Password"
+                            placeholder="Challan No"
                             required
                             />
                             
                             <Input 
-                            id = "role"
-                            name="role"
+                            id = "challanDate"
+                            name="challanDate"
+                            type="Date"
+                            value={this.state.challanDate}
+                            onChange={this.handleInputChange}
+                            placeholder="Challan Date"
+                            required
+                            />
+                            
+                            <Input 
+                            id = "vehicleNo"
+                            name="vehicleNo"
                             type="text"
-                            value={this.state.role}
+                            value={this.state.vehicleNo}
                             onChange={this.handleInputChange}
-                            placeholder="Role"
+                            placeholder="Vehicle No"
                             required
                             />
                 
                             <Input 
-                            id = "authority"
-                            name="authority"
+                            id = "partyCode"
+                            name="partyCode"
                             type="text"
-                            value={this.state.authority}
+                            value={this.state.partyCode}
                             onChange={this.handleInputChange}
-                            placeholder="Authority"
+                            placeholder="Party Code"
+                            required
+                            />
+                            <Input 
+                            id = "itemCode"
+                            name="itemCode"
+                            type="text"
+                            value={this.state.item.itemCode}
+                            onChange={this.handleInputChange}
+                            placeholder="Item Code"
                             required
                             />
 
-                            <Checkbox
-                            name="acceptTerms"
-                            title="Accept Terms and Conditions"
-                            value={this.state.acceptTerms}
-                            onChange={this.handleCheckBox}
+                            <Input 
+                            id = "itemDescription"
+                            name="itemDescription"
+                            type="text"
+                            value={this.state.item.itemDescription}
+                            onChange={this.handleInputChange}
+                            placeholder="Item Description"
+                            required
+                            />
+
+                            <Input 
+                            id = "itemHeader"
+                            name="itemHeader"
+                            type="text"
+                            value={this.state.item.itemHeader}
+                            onChange={this.handleInputChange}
+                            placeholder="Item Header"
+                            required
+                            />
+
+                            <Input 
+                            id = "poNo"
+                            name="poNo"
+                            type="Number"
+                            value={this.state.poNo}
+                            onChange={this.handleInputChange}
+                            placeholder="PO No"
+                            required
+                            />
+
+                            <Input 
+                            id = "hsnCode"
+                            name="hsnCode"
+                            type="text"
+                            value={this.state.hsnCode}
+                            onChange={this.handleInputChange}
+                            placeholder="HSN Code"
+                            required
+                            />
+
+                            <Input 
+                            id = "quantity"
+                            name="quantity"
+                            type="Number"
+                            value={this.state.receiving.quantity}
+                            onChange={this.handleInputChange}
+                            placeholder="Quantity"
+                            required
+                            />
+
+                            <Input 
+                            id = "uom"
+                            name="uom"
+                            type="text"
+                            value={this.state.receiving.uom}
+                            onChange={this.handleInputChange}
+                            placeholder="UOM"
+                            required
+                            />
+
+                            <Input 
+                            id = "cgst"
+                            name="cgst"
+                            type="Number"
+                            value={this.state["rate&Amount"].cgst}
+                            onChange={this.handleInputChange}
+                            placeholder="CGST"
+                            required
+                            />
+
+                            <Input 
+                            id = "sgst"
+                            name="sgst"
+                            type="Number"
+                            value={this.state["rate&Amount"].sgst}
+                            onChange={this.handleInputChange}
+                            placeholder="SGST"
+                            required
+                            />
+
+                            <Input 
+                            id = "igst"
+                            name="igst"
+                            type="Number"
+                            value={this.state["rate&Amount"].igst}
+                            onChange={this.handleInputChange}
+                            placeholder="IGST"
                             required
                             />
         
@@ -184,7 +244,6 @@ export default class NewGRN extends Component {
                         </form>
                         </div>
                     </div>
-                </div>
             </React.Fragment>
         )
     }

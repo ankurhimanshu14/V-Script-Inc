@@ -6,7 +6,6 @@ const jwtKey = process.env.JWT_SECRET_KEY;
 
 module.exports = {
     fetchNewSteelData: (req, res, next) => {
-        console.log('----------steel req.body------------', req.body)
         req._newSteel = new STEEL_MODEL({
             [STEEL_FIELDS.CHALLAN_NO]: req.body.challanNo,
             [STEEL_FIELDS.CHALLAN_DATE]: req.body.challanDate,

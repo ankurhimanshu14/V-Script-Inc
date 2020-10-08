@@ -1,7 +1,6 @@
 const { USER_FIELDS, USER_MODEL } = require('../../models/users');
 module.exports = {
     fetchUserData: (req, res, next) => {
-        console.log('-------------user registration fetched data------------', req.body);
         req._newUser = new USER_MODEL({
             [USER_FIELDS.EMPLOYEE_ID]: req.body.employeeId,
             [USER_FIELDS.USERNAME]: req.body.username,

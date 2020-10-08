@@ -10,7 +10,7 @@ const v1Routes = require('./routes/v1');
 
 
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(session({
@@ -19,24 +19,25 @@ app.use(session({
   saveUninitialized: true
 }))
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   const allowedOrigin = 'http://localhost:3000';
   
   if(allowedOrigin === req.headers.origin) {
-    res.set('Access-Control-Allow-Origin', req.headers.origin)
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
   } else {
-    res.set('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Origin', '*')
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type', 'Access-Control-Allow-Origin', 'Origin');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+    return;
   }
 
-  res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type');
-  res.set('Accept', 'application/json');
-  res.set('Content-Type', 'application/x-www-form-urlencoded');
-  res.set('Access-Control-Allow-Credentials', 'true');
-
   next();
-
-})
+});
 
 app.use('/api/v1', v1Routes)
 

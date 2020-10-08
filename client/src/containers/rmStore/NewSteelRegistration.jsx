@@ -26,21 +26,19 @@ export default class NewSteel extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.setState(this.state);
-        const data = this.state;
 
         const requestOptions = {
-            method: 'POST',
             credentials: 'include',
-            body: JSON.stringify(data)
+            mode: 'cors',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state),
         };
-        console.log('------------reqOPtions-------------------', requestOptions.body);
         fetch('http://localhost:5000/api/v1/private/steels/registration', requestOptions)
         .then(response => response.json())
         .then(result => {
             if(result) {
-                this.setState(result)
-                alert(result.data.grNo);
+                alert('Steel saved: ', result.data.grNo);
             } else {
                 alert('Saving error');
             }

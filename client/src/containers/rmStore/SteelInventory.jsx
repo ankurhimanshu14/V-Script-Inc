@@ -16,7 +16,6 @@ export default class SteelInventory extends Component {
 
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value})
-        console.log(this.state);
     }
 
     async handleSubmit(event) {
@@ -67,14 +66,18 @@ export default class SteelInventory extends Component {
                         />
                     </form>
                 </div>
-                <table id="steels" className="table table-hover">
-                    <thead>
+                <div className="container">
+                <div className="row">
+                    <div>
+                    <div className="table-responsive" data-pattern="priority-columns">
+                        <table summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" className="table table-bordered table-hover">
+                        <thead>
                         <tr className="table-primary">
-                            <th scope="col">Material Grade</th>
-                            <th scope="col">Section</th>
-                            <th scope="col">Heat No</th>
-                            <th scope="col">Heat Code</th>
-                            <th scope="col">Available Quantity (KGS)</th>
+                            <th priority="1">Material Grade</th>
+                            <th priority="2">Section</th>
+                            <th priority="3">Heat No</th>
+                            <th priority="4">Heat Code</th>
+                            <th priority="5">Available Quantity (KGS)</th>
                         </tr>
                     </thead>   
                     <tbody>
@@ -89,6 +92,10 @@ export default class SteelInventory extends Component {
                         ))}
                     </tbody>
                 </table>
+                </div>
+                </div>
+                </div>
+                </div>
             </React.Fragment>
         )
     }

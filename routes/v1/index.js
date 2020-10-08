@@ -13,7 +13,7 @@ router.post('/public/users/login', userAuth.fetchLoginDetails, userAuth.searchIn
 router.get('/private/users/logout', auth, userLogout.deleteTokens);
 
 //GATE_ENTRY
-router.post('/private/items/newGateEntry', auth, newGateEntry.fetchNewItemData, newGateEntry.saveItemData, newGateEntry.response);
+router.post('/private/items/registration', auth, newGateEntry.fetchNewItemData, newGateEntry.saveItemData, newGateEntry.response);
 router.get('/private/items/listGRN', auth, listGRN.fetchFromMongo, listGRN.response);
 
 //RM_STORE
