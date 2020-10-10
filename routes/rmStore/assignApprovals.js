@@ -21,7 +21,6 @@ module.exports = {
         .catch(err => {
             console.log('Error: ', err);
         })
-        console.log(req._steelsForApprovals)
         next();
     },
 
@@ -55,7 +54,6 @@ module.exports = {
                 req._approvedSteel.createdBy = _decrypt.userId;
                 req._approvedSteel.modifiedBy = _decrypt.userId;
             }
-            console.log(req.body.approvals)
             if(req.body.approvals) {
                 req._approvedSteel.approvals.push(req.body.approvals);
                 steel.updateOne({[ITEM_FIELDS.SENT_TO_LAB]: 'true'});

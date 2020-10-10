@@ -17,7 +17,6 @@ export default class ItemList extends Component {
         const response = await fetch('http://localhost:5000/api/v1/private/items/listGRN', requestOptions)
         const data = await response.json();
         this.setState({items: data});
-        console.log(this.state);
     }
 
     render() {

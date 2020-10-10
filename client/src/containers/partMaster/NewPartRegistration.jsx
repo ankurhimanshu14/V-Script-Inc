@@ -37,7 +37,15 @@ export default class NewPart extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://localhost:5000/api/v1/parts/registration')
+        const requestOptions = {
+            credentials: 'include',
+            mode: 'cors',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state),
+        };
+
+        fetch('http://localhost:5000/api/v1/parts/registration', requestOptions)
         .then(res => { console.log("heel"); res.json()})
         .then(data => console.log('New Part Added: ' + data))
         .catch(err => console.log('Error: ' + err))
