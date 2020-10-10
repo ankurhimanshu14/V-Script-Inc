@@ -5,31 +5,23 @@ export default class NewGRN extends Component {
     constructor() {
         super();
         this.state = {
-            'grn': {
-                'grNo':'',
-                'creationRemarks': ''
-            },
+            'grNo':'',
+            'creationRemarks': '',
             'challanNo': '',
             'challanDate': '',
             'vehicleNo': '',
             'partyCode': '',
-            'item': {
-                'itemCode': '',
-                'itemDescription': '',
-                'itemHeader':''
-            },
+            'itemCode': '',
+            'itemDescription': '',
+            'itemHeader':'',
             'poNo': '',
             'hsnCode': '',
-            'receiving': {
-                'quantity': '',
-                'uom': ''
-            },
+            'quantity': '',
+            'uom': '',
             'taxableValue': '',
-            'rate&Amount': {
-                'cgst': '',
-                'sgst': '',
-                'igst': ''
-            }
+            'cgst': '',
+            'sgst': '',
+            'igst': ''
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,23 +30,25 @@ export default class NewGRN extends Component {
 
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value});
-                this.setState({[event.target.name]: event.target.value});
     }
 
     async handleSubmit(event) {
         event.preventDefault();
 
         const requestOptions = {
-            method: 'POST',
             credentials: 'include',
-            body: JSON.stringify(this.state)
+            mode: 'cors',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state),
         };
+        
         await fetch('http://localhost:5000/api/v1/private/items/registration', requestOptions)
         .then(response => response.json())
         .then(result => {
             if(result) {
                 console.log('-------------this.state-------------', this.state);
-                alert("Gate Entry Successful. GRN: ", result.data.grn.grNo);
+                alert("Gate Entry Successful. GRN: ", result.data.grNo);
             } else {
                 alert('Saving error');
             }
@@ -76,7 +70,7 @@ export default class NewGRN extends Component {
                             id = "grNo"
                             name="grNo"
                             type="Number"
-                            value={this.state.grn.grNo}
+                            value={this.state.grNo}
                             onChange={this.handleInputChange}
                             placeholder="GRN"
                             required
@@ -86,7 +80,7 @@ export default class NewGRN extends Component {
                             id = "creationRemarks"
                             name="creationRemarks"
                             type="text"
-                            value={this.state.grn.creationRemarks}
+                            value={this.state.creationRemarks}
                             onChange={this.handleInputChange}
                             placeholder="Remarks"
                             required
@@ -135,7 +129,7 @@ export default class NewGRN extends Component {
                             id = "itemCode"
                             name="itemCode"
                             type="text"
-                            value={this.state.item.itemCode}
+                            value={this.state.itemCode}
                             onChange={this.handleInputChange}
                             placeholder="Item Code"
                             required
@@ -145,7 +139,7 @@ export default class NewGRN extends Component {
                             id = "itemDescription"
                             name="itemDescription"
                             type="text"
-                            value={this.state.item.itemDescription}
+                            value={this.state.itemDescription}
                             onChange={this.handleInputChange}
                             placeholder="Item Description"
                             required
@@ -155,7 +149,7 @@ export default class NewGRN extends Component {
                             id = "itemHeader"
                             name="itemHeader"
                             type="text"
-                            value={this.state.item.itemHeader}
+                            value={this.state.itemHeader}
                             onChange={this.handleInputChange}
                             placeholder="Item Header"
                             required
@@ -185,7 +179,7 @@ export default class NewGRN extends Component {
                             id = "quantity"
                             name="quantity"
                             type="Number"
-                            value={this.state.receiving.quantity}
+                            value={this.state.quantity}
                             onChange={this.handleInputChange}
                             placeholder="Quantity"
                             required
@@ -195,7 +189,7 @@ export default class NewGRN extends Component {
                             id = "uom"
                             name="uom"
                             type="text"
-                            value={this.state.receiving.uom}
+                            value={this.state.uom}
                             onChange={this.handleInputChange}
                             placeholder="UOM"
                             required
@@ -205,7 +199,7 @@ export default class NewGRN extends Component {
                             id = "cgst"
                             name="cgst"
                             type="Number"
-                            value={this.state["rate&Amount"].cgst}
+                            value={this.state.cgst}
                             onChange={this.handleInputChange}
                             placeholder="CGST"
                             required
@@ -215,7 +209,7 @@ export default class NewGRN extends Component {
                             id = "sgst"
                             name="sgst"
                             type="Number"
-                            value={this.state["rate&Amount"].sgst}
+                            value={this.state.sgst}
                             onChange={this.handleInputChange}
                             placeholder="SGST"
                             required
@@ -225,7 +219,7 @@ export default class NewGRN extends Component {
                             id = "igst"
                             name="igst"
                             type="Number"
-                            value={this.state["rate&Amount"].igst}
+                            value={this.state.igst}
                             onChange={this.handleInputChange}
                             placeholder="IGST"
                             required

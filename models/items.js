@@ -23,13 +23,12 @@ const FIELDS = {
     GRN: 'grn',
     GR_NO: 'grNo',
     GR_TIMESTAMP: 'grTimestamp',
-    CREATION: 'creation',
+    SENT_TO_LAB: 'sentToLab',
     CREATED_BY: 'createdBy',
     CREATED_ON: 'createdOn',
-    MODIFICATION: 'modification',
+    CREATION_REMARKS: 'creationRemarks',
     MODIFIED_BY: 'modifiedBy',
     MODIFIED_ON: 'modifiedOn',
-    CREATION_REMARKS: 'creationRemarks',
     MODIFICATION_REMARKS: 'modificationRemarks'
 };
 
@@ -39,37 +38,37 @@ const SCHEMA = {
     [FIELDS.VEHICLE_NO]: { type: String },
     [FIELDS.PARTY_CODE]: { type: String },
     // [FIELDS.PARTY_CODE]: { type: Schema.Types.ObjectId, ref: 'Party' },
-    [FIELDS.ITEM]: {
-        [FIELDS.ITEM_CODE]: { type: String },
-        [FIELDS.ITEM_DESCRIPTION]: { type: String },
-        [FIELDS.ITEM_HEADER]: { type: String }
-    },
-    [FIELDS.PO_NO]: { tpye: String, default: 0 },
+    [FIELDS.ITEM_CODE]: { type: String },
+    [FIELDS.ITEM_DESCRIPTION]: { type: String },
+    [FIELDS.ITEM_HEADER]: { type: String },
+    [FIELDS.PO_NO]: { type: String, default: 0 },
     [FIELDS.HSN_CODE]: { type: String },
-    [FIELDS.RECEIVING]: {
-        [FIELDS.QUANTITY]: { type: Number },
-        [FIELDS.UOM]: { type: String }
-    },
-    [FIELDS.TAXABLE_VALUE]: { amount: {type: Number}, currency: { type: String, default: 'INR' } },
-    [FIELDS.RATE_AMOUNT]: {
-        [FIELDS.CGST]: { type: Number },
-        [FIELDS.SGST]: { type: Number },
-        [FIELDS.IGST]: { type: Number }
-    },
-    [FIELDS.GRN]: {
-        [FIELDS.GR_NO]: { type: Number },
-        [FIELDS.GR_TIMESTAMP]: { type: Date, default: Date.now() },
-        [FIELDS.CREATED_BY]: {type: Schema.Types.String, ref: 'User' },
-        [FIELDS.CREATION_REMARKS]: { type: String }
-    },
-    [FIELDS.MODIFICATION]: {
-        [FIELDS.MODIFIED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
-        [FIELDS.MODIFIED_ON]: { type: Date },
-        [FIELDS.MODIFICATION_REMARKS]: { type: String }
-    }
+    [FIELDS.QUANTITY]: { type: Number },
+    [FIELDS.UOM]: { type: String },
+    [FIELDS.TAXABLE_VALUE]: { type: Number, currency: { type: String, default: 'INR' } },
+    [FIELDS.CGST]: { type: Number },
+    [FIELDS.SGST]: { type: Number },
+    [FIELDS.IGST]: { type: Number },
+    [FIELDS.GR_NO]: { type: Number },
+    [FIELDS.GR_TIMESTAMP]: { type: Date, default: Date.now() },
+    [FIELDS.SENT_TO_LAB]: { type: Boolean },
+    [FIELDS.CREATED_BY]: {type: Schema.Types.ObjectId, ref: 'User' },
+    [FIELDS.CREATION_REMARKS]: { type: String },
+    [FIELDS.MODIFIED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
+    [FIELDS.MODIFIED_ON]: { type: Date },
+    [FIELDS.MODIFICATION_REMARKS]: { type: String }
 };
 
 const itemSchema = new Schema(SCHEMA);
+
+itemSchema.pre('save', function(next) {
+    if(this.itemHeader === 'STEEL' || 'steel') {
+        this.sentToLab = false;
+    } else {
+        this.sentToLab = true;
+    }
+    next();
+})
 
 module.exports = {
     ITEM_FIELDS: FIELDS,

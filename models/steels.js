@@ -12,6 +12,7 @@ const FIELDS = {
     JOMINY_VALUE: 'jominyValue',
     APPROVALS: 'approvals',
     RECEIVED_QTY: 'receivedQty',
+    RELEASED_QTY: 'releasedQty',
     AVAILABLE_QTY: 'availableQty',
     HEAT_STATUS: 'heatStatus',
     CREATED_BY: 'createdBy',
@@ -21,21 +22,20 @@ const FIELDS = {
 };
 
 const SCHEMA = {
-    [FIELDS.GR_NO]: { type: Number, unique: true },
+    [FIELDS.GR_NO]: { type: String },
     [FIELDS.CHALLAN_NO]: { type: String },
-    [FIELDS.CHALLAN_DATE]: { type: Date },
+    [FIELDS.CHALLAN_DATE]: {  type: String },
     [FIELDS.GRADE]: { type: String },
     [FIELDS.SECTION]: { type: String },
     [FIELDS.HEAT_NO]: { type: [String] },
     [FIELDS.HEAT_CODE]: { type: String },
     [FIELDS.JOMINY_VALUE]: { type: String },
     [FIELDS.APPROVALS]: {type: [String] },
-    [FIELDS.RECEIVED_QTY]: { type: Number},
-    [FIELDS.AVAILABLE_QTY]: { type: Number, default: function () {
-        return this[FIELDS.RECEIVED_QTY];
-    } },
+    [FIELDS.RECEIVED_QTY]: { type: Number },
+    [FIELDS.RELEASED_QTY]: { type: Number, default: 0 },
+    [FIELDS.AVAILABLE_QTY]: { type: Number },
     [FIELDS.HEAT_STATUS]: { type: Boolean, default: true },
-    [FIELDS.CREATED_BY]: { type: Schema.Types.String, ref: 'User' },
+    [FIELDS.CREATED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
     [FIELDS.CREATED_ON]: { type: Date, default: Date.now },
     [FIELDS.MODIFIED_BY]: { type: Schema.Types.ObjectId, ref: 'User' },
     [FIELDS.MODIFIED_ON]: { type: Date }
@@ -43,11 +43,10 @@ const SCHEMA = {
 
 const steelSchema = new Schema(SCHEMA);
 
-steelSchema.pre('save', async function(next) {
-    this.availableQty = this.receivedQty;
-    this.grNo = Date.now();
+steelSchema.pre('save', function(next) {
+    this[FIELDS.AVAILABLE_QTY] = this[FIELDS.RECEIVED_QTY] - this[FIELDS.RELEASED_QTY];
     next();
-});
+})
 
 steelSchema.set('toJSON', {
     virtuals: true,

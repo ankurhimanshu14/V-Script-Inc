@@ -4,7 +4,7 @@ import './App.css';
 import SignUp from './containers/admin/SignUp';
 import SignIn from './containers/admin/SignIn';
 import ForgotPassword from './containers/admin/ForgotPassword';
-import NewSteelRegistration from './containers/rmStore/NewSteelRegistration';
+import AssignApprovals from './containers/rmStore/AssignApprovals';
 import SteelInventory from './containers/rmStore/SteelInventory';
 import PartList from './containers/partMaster/ListAllParts';
 import PrivateRoutes from './containers/admin/PrivateRoutes';
@@ -77,7 +77,7 @@ export default class App extends Component{
                 <PrivateRoutes component={SignUp} path="/users/registration" exact />
                 <PrivateRoutes component={NewGRN} path="/gateEntry/newGRN" exact />
                 <PrivateRoutes component={ItemList} path="/gateEntry/listGRN" exact />
-                <PrivateRoutes component={NewSteelRegistration} path="/steels/registration" exact />
+                <PrivateRoutes component={AssignApprovals} path="/steels/registration" exact />
                 <PrivateRoutes component={SteelInventory} path="/steels/inventory" exact />
                 <PrivateRoutes component={NewSchedule} path="/schedule/registration" exact />
                 <PrivateRoutes component={NewPart} path="/parts/registration" exact />

@@ -6,7 +6,8 @@ const dbUri = process.env.MONGODB_URI;
 const dbOptions = { 
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
 };
 
 mongoose.connect(dbUri, dbOptions);
