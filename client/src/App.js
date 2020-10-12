@@ -4,7 +4,7 @@ import './App.css';
 import SignUp from './containers/admin/SignUp';
 import SignIn from './containers/admin/SignIn';
 import ForgotPassword from './containers/admin/ForgotPassword';
-import AssignApprovals from './containers/rmStore/AssignApprovals';
+import SteelApprovals from './containers/rmStore/SteelApprovals';
 import SteelInventory from './containers/rmStore/SteelInventory';
 import PartList from './containers/partMaster/ListAllParts';
 import PrivateRoutes from './containers/admin/PrivateRoutes';
@@ -40,7 +40,7 @@ export default class App extends Component{
                         </li>
                         <li className="dropdown"><Link to="/steels" className="trigger-drop">Steels<i className="arrow"></i></Link>
                             <ul className="drop">
-                                <li><Link to ="/steels/registration">Assign Parts</Link></li>
+                                <li><Link to ="/steels/approvals">Assign Parts</Link></li>
                                 <li><Link to ="/steels/inventory">Steel Inventory</Link></li>
                                 <li><Link to ="/steels/request">Steel Request</Link></li>
                             </ul>
@@ -69,7 +69,7 @@ export default class App extends Component{
                         <LogOut className="btn btn-outline-success my-2 my-sm-0" />
                     </ul>
                 </nav>
-            </div>    
+            </div>
             <div className="tab-content" id="myTabContent">
             <Switch>
                 <PublicRoutes restricted={true} component={SignIn} path="/" exact />
@@ -77,7 +77,7 @@ export default class App extends Component{
                 <PrivateRoutes component={SignUp} path="/users/registration" exact />
                 <PrivateRoutes component={NewGRN} path="/gateEntry/newGRN" exact />
                 <PrivateRoutes component={ItemList} path="/gateEntry/listGRN" exact />
-                <PrivateRoutes component={AssignApprovals} path="/steels/registration" exact />
+                <PrivateRoutes component={SteelApprovals} path="/steels/approvals" exact />
                 <PrivateRoutes component={SteelInventory} path="/steels/inventory" exact />
                 <PrivateRoutes component={NewSchedule} path="/schedule/registration" exact />
                 <PrivateRoutes component={NewPart} path="/parts/registration" exact />

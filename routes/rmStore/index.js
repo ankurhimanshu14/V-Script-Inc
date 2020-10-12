@@ -1,5 +1,5 @@
 module.exports = {
-    assignApprovals: require('./assignApprovals'),
+    pendingApprovals: require('./pendingApprovals'),
     registration: require('./registration'),
     inventory: require('./inventoryByDate'),
     releaseToCutting: require('./releaseToCutting')

@@ -46,7 +46,7 @@ export default class NewPart extends Component {
         };
 
         fetch('http://localhost:5000/api/v1/parts/registration', requestOptions)
-        .then(res => { console.log("heel"); res.json()})
+        .then(res => res.json())
         .then(data => console.log('New Part Added: ' + data))
         .catch(err => console.log('Error: ' + err))
     }
